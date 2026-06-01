@@ -1,0 +1,61 @@
+{
+  "last_updated": "2026-06-01",
+  "description": "初中物理视频学习资源库",
+  "categories": [
+    {
+      "id": "mechanics-videos",
+      "name": "力学",
+      "videos": [
+        {
+          "id": "vid-001",
+          "title": "牛顿第一定律 - 惯性",
+          "description": "通过生活中的例子理解惯性原理",
+          "platform": "bilibili",
+          "bvid": "BV1xx411c7mD",
+          "duration": "08:32",
+          "thumbnail": "",
+          "tags": ["牛顿定律", "惯性"]
+        },
+        {
+          "id": "vid-002",
+          "title": "浮力原理 - 阿基米德",
+          "description": "从实际实验出发讲解浮力产生的原因",
+          "platform": "bilibili",
+          "bvid": "BV1xx411c7mE",
+          "duration": "12:15",
+          "thumbnail": "",
+          "tags": ["浮力", "阿基米德"]
+        }
+      ]
+    },
+    {
+      "id": "electricity-videos",
+      "name": "电学",
+      "videos": [
+        {
+          "id": "vid-003",
+          "title": "串并联电路辨析",
+          "description": "快速判断串并联电路的方法与技巧",
+          "platform": "bilibili",
+          "bvid": "BV1xx411c7mF",
+          "duration": "10:45",
+          "thumbnail": "",
+          "tags": ["电路", "串并联"]
+        }
+      ]
+    }
+  ],
+  "upload_guide": {
+    "description": "如需添加自己的视频，请按以下格式添加：",
+    "format": {
+      "id": "唯一编号",
+      "title": "视频标题",
+      "description": "视频简介",
+      "platform": "bilibili 或 youtube",
+      "bvid": "Bilibili BV号（如 BV1xx411c7mD）",
+      "duration": "时长",
+      "tags": ["标签1", "标签2"]
+    },
+    "note": "视频请先上传到 Bilibili（国内访问最快），然后把 BV 号填入此处"
+  }
+}
