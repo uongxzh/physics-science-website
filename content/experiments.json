@@ -16,7 +16,11 @@
           "thumbnail": "../force-diagram.png",
           "difficulty": "基础",
           "duration": "15分钟",
-          "tags": ["牛顿定律", "摩擦力", "运动学"]
+          "tags": [
+            "牛顿定律",
+            "摩擦力",
+            "运动学"
+          ]
         },
         {
           "id": "pendulum",
@@ -27,7 +31,11 @@
           "thumbnail": "",
           "difficulty": "中等",
           "duration": "20分钟",
-          "tags": ["单摆", "周期", "重力"]
+          "tags": [
+            "单摆",
+            "周期",
+            "重力"
+          ]
         }
       ]
     },
@@ -45,7 +53,11 @@
           "thumbnail": "../circuit-flow.png",
           "difficulty": "基础",
           "duration": "25分钟",
-          "tags": ["电路", "欧姆定律", "串并联"]
+          "tags": [
+            "电路",
+            "欧姆定律",
+            "串并联"
+          ]
         },
         {
           "id": "resistance",
@@ -56,7 +68,11 @@
           "thumbnail": "",
           "difficulty": "基础",
           "duration": "15分钟",
-          "tags": ["电阻", "欧姆定律", "电流"]
+          "tags": [
+            "电阻",
+            "欧姆定律",
+            "电流"
+          ]
         }
       ]
     },
@@ -74,7 +90,11 @@
           "thumbnail": "../light-prism.png",
           "difficulty": "中等",
           "duration": "20分钟",
-          "tags": ["凸透镜", "成像规律", "光路"]
+          "tags": [
+            "凸透镜",
+            "成像规律",
+            "光路"
+          ]
         }
       ]
     },
@@ -92,7 +112,11 @@
           "thumbnail": "../heat-molecules.png",
           "difficulty": "基础",
           "duration": "15分钟",
-          "tags": ["物态变化", "分子运动", "温度"]
+          "tags": [
+            "物态变化",
+            "分子运动",
+            "温度"
+          ]
         }
       ]
     },
@@ -110,7 +134,11 @@
           "thumbnail": "../sound-waves.png",
           "difficulty": "基础",
           "duration": "15分钟",
-          "tags": ["声波", "频率", "波长"]
+          "tags": [
+            "声波",
+            "频率",
+            "波长"
+          ]
         }
       ]
     }
