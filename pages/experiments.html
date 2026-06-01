@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟实验室 - 悟理星球</title>
+  <meta name="description" content="初中物理虚拟实验平台，在线操作声光热力电实验">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #1e429f;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+      color: white;
+      padding: 40px 0 32px;
+      text-align: center;
+    }
+    header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 8px; }
+    header p { font-size: 0.9375rem; opacity: 0.85; max-width: 500px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-size: 0.875rem; margin-bottom: 16px;
+    }
+    .back-link:hover { color: white; }
+
+    /* Category tabs */
+    .tabs {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 20px 0 8px; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0; padding: 8px 16px; border-radius: 9999px;
+      border: 1px solid var(--border); background: var(--card);
+      color: var(--text-light); font-size: 0.875rem; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tab:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+    /* Experiment grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px; padding: 20px 0 40px;
+    }
+    .card {
+      background: var(--card); border-radius: 16px;
+      border: 1px solid var(--border); overflow: hidden;
+      box-shadow: var(--shadow); transition: all 0.2s;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .card-img {
+      width: 100%; height: 160px; object-fit: cover;
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    }
+    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .card-tag {
+      display: inline-block; padding: 2px 10px; border-radius: 9999px;
+      font-size: 0.75rem; font-weight: 500; margin-bottom: 10px; width: fit-content;
+    }
+    .tag-easy { background: #dcfce7; color: #166534; }
+    .tag-medium { background: #fef9c3; color: #854d0e; }
+    .tag-hard { background: #fee2e2; color: #991b1b; }
+    .card h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 6px; }
+    .card p { font-size: 0.875rem; color: var(--text-light); margin-bottom: 12px; flex: 1; }
+    .card-meta {
+      display: flex; gap: 12px; font-size: 0.75rem; color: var(--text-light);
+      border-top: 1px solid var(--border); padding-top: 12px; margin-top: auto;
+    }
+    .card-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 16px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--card); border-radius: 20px; width: 100%;
+      max-width: 960px; max-height: 90vh; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+    }
+    .modal-header h3 { font-size: 1.125rem; font-weight: 600; }
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: none; background: var(--bg); color: var(--text-light);
+      font-size: 1.25rem; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .modal-close:hover { background: var(--border); }
+    .modal-body { flex: 1; overflow: hidden; position: relative; }
+    .modal-body iframe {
+      width: 100%; height: 100%; border: none;
+      min-height: 60vh;
+    }
+    .modal-footer {
+      padding: 12px 20px; border-top: 1px solid var(--border);
+      font-size: 0.8125rem; color: var(--text-light);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-footer a {
+      color: var(--primary); text-decoration: none; font-weight: 500;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center; padding: 60px 20px; color: var(--text-light);
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid var(--border);
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.375rem; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+      .modal { max-height: 95vh; border-radius: 16px; }
+      .modal-body iframe { min-height: 50vh; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 24px; font-size: 0.75rem;
+      color: var(--text-light); border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="back-link">← 返回首页</a>
+      <h1>🔬 虚拟实验室</h1>
+      <p>在线操作初中物理实验，零成本、零风险、随时随地做实验</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="tabs" id="tabs"></div>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>正在加载实验资源...</p>
+    </div>
+    <div class="grid" id="grid" style="display:none;"></div>
+  </main>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">实验标题</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modal-iframe" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+      </div>
+      <div class="modal-footer">
+        <span>实验由 PhET 提供 · 科罗拉多大学</span>
+        <a href="" id="modal-link" target="_blank" rel="noopener">在新窗口打开 ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>悟理星球 · 让物理不再难懂 · 内容自动更新于 <span id="update-time">--</span></p>
+    </div>
+  </footer>
+
+  <script>
+    let data = null;
+    let currentCategory = 'all';
+
+    async function loadExperiments() {
+      try {
+        const res = await fetch('../content/experiments.json');
+        data = await res.json();
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('grid').style.display = 'grid';
+        document.getElementById('update-time').textContent = data.last_updated || '--';
+        renderTabs();
+        renderCards();
+      } catch (e) {
+        document.getElementById('loading').innerHTML = '<p>加载失败，请刷新页面重试</p>';
+        console.error(e);
+      }
+    }
+
+    function renderTabs() {
+      const tabs = document.getElementById('tabs');
+      let html = `<button class="tab active" data-cat="all" onclick="switchCat('all')">全部</button>`;
+      data.categories.forEach(cat => {
+        html += `<button class="tab" data-cat="${cat.id}" onclick="switchCat('${cat.id}')">${cat.icon} ${cat.name}</button>`;
+      });
+      tabs.innerHTML = html;
+    }
+
+    function switchCat(catId) {
+      currentCategory = catId;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.cat === catId));
+      renderCards();
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('grid');
+      let html = '';
+      data.categories.forEach(cat => {
+        if (currentCategory !== 'all' && cat.id !== currentCategory) return;
+        cat.experiments.forEach(exp => {
+          const tagClass = exp.difficulty === '基础' ? 'tag-easy' : exp.difficulty === '中等' ? 'tag-medium' : 'tag-hard';
+          html += `
+            <div class="card" onclick="openModal('${exp.title}', '${exp.embed_url}')">
+              ${exp.thumbnail ? `<img class="card-img" src="${exp.thumbnail}" alt="${exp.title}" loading="lazy">` : `<div class="card-img" style="display:flex;align-items:center;justify-content:center;font-size:3rem;">${cat.icon}</div>`}
+              <div class="card-body">
+                <span class="card-tag ${tagClass}">${exp.difficulty}</span>
+                <h3>${exp.title}</h3>
+                <p>${exp.description}</p>
+                <div class="card-meta">
+                  <span>⏱ ${exp.duration}</span>
+                  <span>🏷 ${exp.tags.slice(0, 2).join('、')}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      });
+      grid.innerHTML = html || '<p style="grid-column:1/-1;text-align:center;color:var(--text-light);padding:40px;">暂无实验</p>';
+    }
+
+    function openModal(title, url) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-iframe').src = url;
+      document.getElementById('modal-link').href = url;
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.getElementById('modal-iframe').src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal').addEventListener('click', e => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    loadExperiments();
+  </script>
+</body>
+</html>
