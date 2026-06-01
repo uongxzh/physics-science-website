@@ -1,16 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "name": "physics-science-website",
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
-  "rewrites": [
-    {
-      "source": "/((?!assets/|pages/|content/).*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)",
