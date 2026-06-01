@@ -172,7 +172,7 @@
 
     async function loadVideos() {
       try {
-        const res = await fetch('../content/videos.json');
+        const res = await fetch('./data/videos.json');
         data = await res.json();
         document.getElementById('loading').style.display = 'none';
         document.getElementById('grid').style.display = 'grid';

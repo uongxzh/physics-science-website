@@ -202,7 +202,7 @@
 
     async function loadExperiments() {
       try {
-        const res = await fetch('../content/experiments.json');
+        const res = await fetch('./data/experiments.json');
         data = await res.json();
         document.getElementById('loading').style.display = 'none';
         document.getElementById('grid').style.display = 'grid';
