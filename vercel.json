@@ -7,7 +7,7 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/((?!assets/).*)",
+      "source": "/((?!assets/|pages/|content/).*)",
       "destination": "/index.html"
     }
   ],
