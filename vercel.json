@@ -4,6 +4,13 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
+  "routes": [
+    { "src": "/content/(.*)", "dest": "/content/$1", "continue": true },
+    { "src": "/pages/(.*)", "dest": "/pages/$1", "continue": true },
+    { "src": "/assets/(.*)", "dest": "/assets/$1", "continue": true },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
