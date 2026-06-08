@@ -117,3 +117,5 @@ npm run validate content/problems/2026-06-08-xxx.json
 MIT
 
 <!-- vercel-rebuild-trigger:2026-06-08T10:03:58.878Z -->
+
+<!-- pages-rebuild-trigger:2026-06-08T15:09:39.694Z -->
