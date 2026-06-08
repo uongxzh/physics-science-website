@@ -1,0 +1,22 @@
+name: IndexNow Auto-Submit
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0,12 * * *'
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit to IndexNow
+        uses: bojieyang/indexnow-action@v1
+        with:
+          sitemap-location: "https://251119.xyz/sitemap.xml"
+          endpoint: "www.bing.com"
+          since: 1
+          since-unit: "day"
+          limit: 100
+          key: ${{ secrets.INDEXNOW_KEY }}
+          key-location: "https://251119.xyz/${{ secrets.INDEXNOW_KEY }}.txt"

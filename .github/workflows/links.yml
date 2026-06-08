@@ -1,0 +1,38 @@
+name: Link Checker
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --cache --max-cache-age 1d --exclude-private --exclude-mail https://251119.xyz
+          fail: false
+
+      - name: Create Issue
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: '🔴 发现死链'
+          content-filepath: ./lychee/out.md
+          labels: ['broken-links', 'automated']

@@ -1,0 +1,40 @@
+name: Site Monitor & Alert
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site availability
+        run: |
+          curl -sf https://251119.xyz/ > /dev/null || exit 1
+
+      - name: Check SSL expiry
+        if: always()
+        uses: surmon-china/action-ssl-cert-expiry-checker@v1.0.0
+        with:
+          domain: 251119.xyz
+          warning-days: 14
+
+  alert-on-failure:
+    needs: check
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create GitHub Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 站点异常告警: ${new Date().toISOString()}`,
+              body: `监控任务失败，请检查站点状态。\n\n[查看运行日志](${context.payload.repository.html_url}/actions/runs/${context.runId})`,
+              labels: ['incident', 'automated']
+            });
