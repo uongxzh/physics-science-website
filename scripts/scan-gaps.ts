@@ -6,25 +6,33 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-interface CurriculumChapter {
+export interface CurriculumChapter {
   id: string;
   title: string;
+  description: string;
+  category: string;
+  order: number;
   status: string;
   word_count: number;
   has_experiment: boolean;
   has_problems: boolean;
+  last_updated: string | null;
+  tags: string[];
 }
 
-interface CurriculumSemester {
+export interface CurriculumCategory {
   id: string;
   name: string;
-  chapters: CurriculumChapter[];
+  icon: string;
+  chapter_count: number;
 }
 
-interface CurriculumData {
+export interface CurriculumData {
   version: string;
-  grade: string;
-  semesters: CurriculumSemester[];
+  last_updated: string;
+  total_chapters: number;
+  categories: CurriculumCategory[];
+  chapters: CurriculumChapter[];
 }
 
 export interface GapReport {
@@ -46,27 +54,24 @@ export function scanGaps(curriculum: CurriculumData): GapReport {
     generated_at: new Date().toISOString(),
   };
 
-  for (const semester of curriculum.semesters) {
-    for (const chapter of semester.chapters) {
-      report.total_chapters++;
+  for (const chapter of curriculum.chapters) {
+    report.total_chapters++;
+    const label = `${chapter.id} — ${chapter.title}`;
 
-      const label = `${chapter.id} — ${chapter.title}`;
+    if (chapter.status === "empty") {
+      report.empty_chapters.push(label);
+    }
 
-      if (chapter.status === "empty") {
-        report.empty_chapters.push(label);
-      }
+    if (chapter.word_count < 500) {
+      report.incomplete_chapters.push(label);
+    }
 
-      if (chapter.word_count < 500) {
-        report.incomplete_chapters.push(label);
-      }
+    if (chapter.has_experiment === false) {
+      report.missing_experiments.push(label);
+    }
 
-      if (chapter.has_experiment === false) {
-        report.missing_experiments.push(label);
-      }
-
-      if (chapter.has_problems === false) {
-        report.missing_problems.push(label);
-      }
+    if (chapter.has_problems === false) {
+      report.missing_problems.push(label);
     }
   }
 
@@ -80,31 +85,21 @@ function main() {
     process.argv[3] || path.join(__dirname, "..", "gaps-report.json");
 
   if (!fs.existsSync(inputPath)) {
-    console.error(`❌ Curriculum file not found: ${inputPath}`);
+    console.error(`Curriculum file not found: ${inputPath}`);
     process.exit(1);
   }
 
-  let curriculum: CurriculumData;
-  try {
-    const raw = fs.readFileSync(inputPath, "utf-8");
-    curriculum = JSON.parse(raw) as CurriculumData;
-  } catch (err) {
-    console.error(`❌ Failed to parse curriculum JSON: ${(err as Error).message}`);
-    process.exit(1);
-  }
-
+  const raw = fs.readFileSync(inputPath, "utf-8");
+  const curriculum: CurriculumData = JSON.parse(raw);
   const report = scanGaps(curriculum);
 
   fs.writeFileSync(outputPath, JSON.stringify(report, null, 2), "utf-8");
-
-  console.log(`✅ Gap report written to ${outputPath}`);
-  console.log(`   Total chapters: ${report.total_chapters}`);
-  console.log(`   Empty: ${report.empty_chapters.length}`);
-  console.log(`   Incomplete (<500 words): ${report.incomplete_chapters.length}`);
-  console.log(`   Missing experiments: ${report.missing_experiments.length}`);
-  console.log(`   Missing problems: ${report.missing_problems.length}`);
+  console.log(`Gap report written to ${outputPath}`);
+  console.log(`  Total chapters: ${report.total_chapters}`);
+  console.log(`  Empty: ${report.empty_chapters.length}`);
+  console.log(`  Incomplete (<500 words): ${report.incomplete_chapters.length}`);
+  console.log(`  Missing experiments: ${report.missing_experiments.length}`);
+  console.log(`  Missing problems: ${report.missing_problems.length}`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
-}
+main();

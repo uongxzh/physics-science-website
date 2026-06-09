@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { scanGaps, type GapReport } from "../scan-gaps.ts";
+import { scanGaps } from "../scan-gaps.ts";
 
 function makeCurriculum(
   chapters: Array<{
@@ -13,14 +13,19 @@ function makeCurriculum(
 ) {
   return {
     version: "1.0.0",
-    grade: "test",
-    semesters: [
-      {
-        id: "sem-1",
-        name: "Test Semester",
-        chapters,
-      },
+    last_updated: "2026-06-09",
+    total_chapters: chapters.length,
+    categories: [
+      { id: "acoustics", name: "\u58f0\u5b66", icon: "\ud83d\udd0a", chapter_count: 0 },
     ],
+    chapters: chapters.map((c) => ({
+      ...c,
+      description: "",
+      category: "acoustics",
+      order: 1,
+      last_updated: null,
+      tags: [],
+    })),
   };
 }
 
@@ -58,10 +63,10 @@ describe("scanGaps", () => {
     ]);
 
     const report = scanGaps(curriculum);
-    expect(report.empty_chapters).toEqual(["ch-01 — Empty Chapter"]);
-    expect(report.incomplete_chapters).toEqual(["ch-01 — Empty Chapter"]);
-    expect(report.missing_experiments).toEqual(["ch-01 — Empty Chapter"]);
-    expect(report.missing_problems).toEqual(["ch-01 — Empty Chapter"]);
+    expect(report.empty_chapters).toEqual(["ch-01 \u2014 Empty Chapter"]);
+    expect(report.incomplete_chapters).toEqual(["ch-01 \u2014 Empty Chapter"]);
+    expect(report.missing_experiments).toEqual(["ch-01 \u2014 Empty Chapter"]);
+    expect(report.missing_problems).toEqual(["ch-01 \u2014 Empty Chapter"]);
   });
 
   it("detects incomplete chapters (word_count < 500)", () => {
@@ -78,7 +83,7 @@ describe("scanGaps", () => {
 
     const report = scanGaps(curriculum);
     expect(report.empty_chapters).toEqual([]);
-    expect(report.incomplete_chapters).toEqual(["ch-01 — Short Chapter"]);
+    expect(report.incomplete_chapters).toEqual(["ch-01 \u2014 Short Chapter"]);
     expect(report.missing_experiments).toEqual([]);
     expect(report.missing_problems).toEqual([]);
   });
@@ -96,7 +101,7 @@ describe("scanGaps", () => {
     ]);
 
     const report = scanGaps(curriculum);
-    expect(report.missing_experiments).toEqual(["ch-01 — No Experiment"]);
+    expect(report.missing_experiments).toEqual(["ch-01 \u2014 No Experiment"]);
     expect(report.missing_problems).toEqual([]);
   });
 
@@ -113,49 +118,52 @@ describe("scanGaps", () => {
     ]);
 
     const report = scanGaps(curriculum);
-    expect(report.missing_problems).toEqual(["ch-01 — No Problems"]);
+    expect(report.missing_problems).toEqual(["ch-01 \u2014 No Problems"]);
     expect(report.missing_experiments).toEqual([]);
   });
 
-  it("handles multiple semesters", () => {
+  it("handles multiple categories", () => {
     const curriculum = {
       version: "1.0.0",
-      grade: "test",
-      semesters: [
+      last_updated: "2026-06-09",
+      total_chapters: 2,
+      categories: [
+        { id: "optics", name: "\u5149\u5b66", icon: "\ud83d\udd26", chapter_count: 1 },
+        { id: "mechanics", name: "\u529b\u5b66", icon: "\u2699\ufe0f", chapter_count: 1 },
+      ],
+      chapters: [
         {
-          id: "sem-1",
-          name: "Semester 1",
-          chapters: [
-            {
-              id: "ch-01",
-              title: "A",
-              status: "complete",
-              word_count: 1000,
-              has_experiment: true,
-              has_problems: true,
-            },
-          ],
+          id: "ch-01",
+          title: "A",
+          description: "",
+          category: "optics",
+          order: 1,
+          status: "complete",
+          word_count: 1000,
+          has_experiment: true,
+          has_problems: true,
+          last_updated: null,
+          tags: [],
         },
         {
-          id: "sem-2",
-          name: "Semester 2",
-          chapters: [
-            {
-              id: "ch-02",
-              title: "B",
-              status: "empty",
-              word_count: 0,
-              has_experiment: false,
-              has_problems: false,
-            },
-          ],
+          id: "ch-02",
+          title: "B",
+          description: "",
+          category: "mechanics",
+          order: 2,
+          status: "empty",
+          word_count: 0,
+          has_experiment: false,
+          has_problems: false,
+          last_updated: null,
+          tags: [],
         },
       ],
     };
 
     const report = scanGaps(curriculum);
     expect(report.total_chapters).toBe(2);
-    expect(report.empty_chapters).toEqual(["ch-02 — B"]);
+    expect(report.empty_chapters).toEqual(["ch-02 \u2014 B"]);
   });
 
   it("includes generated_at timestamp", () => {

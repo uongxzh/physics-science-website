@@ -12,10 +12,11 @@
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "type-check": "tsc --noEmit",
-    "generate": "node scripts/generate-content.js",
+    "generate": "npx tsx scripts/generate-content.ts",
     "validate": "node scripts/validate-physics.js",
     "scan-gaps": "npx tsx scripts/scan-gaps.ts",
     "physics-qa": "npx tsx scripts/physics-qa.ts",
+    "generate-content": "npx tsx scripts/generate-content.ts",
     "test": "vitest run"
   },
   "dependencies": {

@@ -15,6 +15,7 @@ const dynamicRoutes = [
   '/sound/waves',
   '/experiments',
   '/about',
+  '/learning',
 ];
 
 export default defineConfig(({ mode }) => ({

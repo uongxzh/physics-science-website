@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import { SEO } from './components/SEO'
 import { ProblemCard } from './components/ProblemCard'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const Experiments = lazy(() => import('./pages/Experiments'))
 const Videos = lazy(() => import('./pages/Videos'))
+const Learning = lazy(() => import('./pages/Learning'))
 
 function Loading() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/experiments" element={<Experiments />} />
         <Route path="/videos" element={<Videos />} />
+        <Route path="/learning" element={<Learning />} />
         <Route path="/problem/:filePath" element={<ProblemCardWrapper />} />
       </Routes>
     </Suspense>

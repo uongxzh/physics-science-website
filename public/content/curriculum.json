@@ -1,184 +1,481 @@
 {
   "version": "1.0.0",
-  "grade": "初中物理",
-  "semesters": [
+  "last_updated": "2026-06-09",
+  "total_chapters": 34,
+  "categories": [
     {
-      "id": "grade-8-semester-1",
-      "name": "八年级上册",
-      "chapters": [
-        {
-          "id": "ch-01",
-          "title": "机械运动",
-          "status": "complete",
-          "word_count": 1200,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-02",
-          "title": "声现象",
-          "status": "complete",
-          "word_count": 850,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-03",
-          "title": "物态变化",
-          "status": "complete",
-          "word_count": 950,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-04",
-          "title": "光现象",
-          "status": "complete",
-          "word_count": 1100,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-05",
-          "title": "透镜及其应用",
-          "status": "incomplete",
-          "word_count": 320,
-          "has_experiment": false,
-          "has_problems": false
-        },
-        {
-          "id": "ch-06",
-          "title": "质量与密度",
-          "status": "empty",
-          "word_count": 0,
-          "has_experiment": false,
-          "has_problems": false
-        }
-      ]
+      "id": "acoustics",
+      "name": "声学",
+      "icon": "🔊",
+      "chapter_count": 4
     },
     {
-      "id": "grade-8-semester-2",
-      "name": "八年级下册",
-      "chapters": [
-        {
-          "id": "ch-07",
-          "title": "力",
-          "status": "complete",
-          "word_count": 1300,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-08",
-          "title": "运动和力",
-          "status": "complete",
-          "word_count": 1150,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-09",
-          "title": "压强",
-          "status": "incomplete",
-          "word_count": 280,
-          "has_experiment": false,
-          "has_problems": true
-        },
-        {
-          "id": "ch-10",
-          "title": "浮力",
-          "status": "empty",
-          "word_count": 0,
-          "has_experiment": false,
-          "has_problems": false
-        },
-        {
-          "id": "ch-11",
-          "title": "功和机械能",
-          "status": "incomplete",
-          "word_count": 450,
-          "has_experiment": true,
-          "has_problems": false
-        },
-        {
-          "id": "ch-12",
-          "title": "简单机械",
-          "status": "empty",
-          "word_count": 0,
-          "has_experiment": false,
-          "has_problems": false
-        }
-      ]
+      "id": "optics",
+      "name": "光学",
+      "icon": "🔦",
+      "chapter_count": 6
     },
     {
-      "id": "grade-9-semester-1",
-      "name": "九年级全一册",
-      "chapters": [
-        {
-          "id": "ch-13",
-          "title": "内能",
-          "status": "complete",
-          "word_count": 1000,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-14",
-          "title": "内能的利用",
-          "status": "complete",
-          "word_count": 900,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-15",
-          "title": "电流和电路",
-          "status": "complete",
-          "word_count": 1050,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-16",
-          "title": "电压和电阻",
-          "status": "incomplete",
-          "word_count": 380,
-          "has_experiment": false,
-          "has_problems": true
-        },
-        {
-          "id": "ch-17",
-          "title": "欧姆定律",
-          "status": "complete",
-          "word_count": 1100,
-          "has_experiment": true,
-          "has_problems": true
-        },
-        {
-          "id": "ch-18",
-          "title": "电功率",
-          "status": "incomplete",
-          "word_count": 420,
-          "has_experiment": true,
-          "has_problems": false
-        },
-        {
-          "id": "ch-19",
-          "title": "生活用电",
-          "status": "empty",
-          "word_count": 0,
-          "has_experiment": false,
-          "has_problems": false
-        },
-        {
-          "id": "ch-20",
-          "title": "电与磁",
-          "status": "empty",
-          "word_count": 0,
-          "has_experiment": false,
-          "has_problems": false
-        }
-      ]
+      "id": "thermal",
+      "name": "热学",
+      "icon": "🌡️",
+      "chapter_count": 6
+    },
+    {
+      "id": "mechanics",
+      "name": "力学",
+      "icon": "⚙️",
+      "chapter_count": 10
+    },
+    {
+      "id": "electricity",
+      "name": "电学",
+      "icon": "⚡",
+      "chapter_count": 8
+    }
+  ],
+  "chapters": [
+    {
+      "id": "sound-basics",
+      "title": "声音的产生与传播",
+      "description": "了解声音是如何产生的，声波在固体、液体、气体中的传播特性",
+      "category": "acoustics",
+      "order": 1,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "sound-properties",
+      "title": "声音的特性",
+      "description": "音调由频率决定，响度与振幅相关，音色让我们分辨不同声源",
+      "category": "acoustics",
+      "order": 2,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "noise-control",
+      "title": "噪声与控制",
+      "description": "认识噪声污染，学习从声源处、传播过程中、人耳处三个环节控制噪声",
+      "category": "acoustics",
+      "order": 3,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "ultrasound",
+      "title": "超声波与应用",
+      "description": "探索人耳听不到的声波世界，了解超声波的应用和次声波的危害",
+      "category": "acoustics",
+      "order": 4,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "light-propagation",
+      "title": "光的直线传播",
+      "description": "光在同种均匀介质中沿直线传播，学习影子的形成和小孔成像原理",
+      "category": "optics",
+      "order": 5,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "light-reflection",
+      "title": "光的反射",
+      "description": "认识光的反射定律，理解镜面反射与漫反射的区别和日常应用",
+      "category": "optics",
+      "order": 6,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "plane-mirror",
+      "title": "平面镜成像",
+      "description": "像与物关于镜面对称，像的大小相等、距离相等、连线垂直于镜面",
+      "category": "optics",
+      "order": 7,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "light-refraction",
+      "title": "光的折射",
+      "description": "光从一种介质进入另一种介质时发生偏折，学习折射定律和折射率",
+      "category": "optics",
+      "order": 8,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "lens",
+      "title": "透镜",
+      "description": "凸透镜和凹透镜的成像规律，照相机、投影仪、放大镜的工作原理",
+      "category": "optics",
+      "order": 9,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "light-dispersion",
+      "title": "光的色散",
+      "description": "白光通过三棱镜分解成七色光谱，了解物体的颜色与光的混合",
+      "category": "optics",
+      "order": 10,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "temperature",
+      "title": "温度与温度计",
+      "description": "温度的概念，常用温度计的原理和使用方法，摄氏温标与热力学温标",
+      "category": "thermal",
+      "order": 11,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "melting-freezing",
+      "title": "物态变化-熔化凝固",
+      "description": "熔化与凝固，晶体和非晶体的区别，熔点和凝固点的概念",
+      "category": "thermal",
+      "order": 12,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "vaporization-liquefaction",
+      "title": "汽化液化",
+      "description": "汽化与液化，蒸发和沸腾的区别，液化的两种方法",
+      "category": "thermal",
+      "order": 13,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "sublimation-deposition",
+      "title": "升华凝华",
+      "description": "物质从固态直接变为气态的升华现象，以及凝华的逆过程",
+      "category": "thermal",
+      "order": 14,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "specific-heat",
+      "title": "比热容",
+      "description": "不同物质吸热能力不同，比热容的定义、公式和实际应用",
+      "category": "thermal",
+      "order": 15,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "heat-engine",
+      "title": "热机",
+      "description": "内燃机的工作原理，四冲程循环，热机效率与能量转化",
+      "category": "thermal",
+      "order": 16,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "motion-description",
+      "title": "运动的描述",
+      "description": "参照物、运动和静止的相对性，机械运动的基本描述方法",
+      "category": "mechanics",
+      "order": 17,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "velocity",
+      "title": "速度计算",
+      "description": "速度的概念和计算，匀速直线运动与变速运动",
+      "category": "mechanics",
+      "order": 18,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "force-concept",
+      "title": "力的概念",
+      "description": "力的概念、单位，力的三要素，力的作用效果",
+      "category": "mechanics",
+      "order": 19,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "gravity-elastic-friction",
+      "title": "重力弹力摩擦力",
+      "description": "三种常见力的认识，力的示意图，弹簧测力计的使用",
+      "category": "mechanics",
+      "order": 20,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "newtons-first-law",
+      "title": "牛顿第一定律",
+      "description": "惯性、牛顿第一定律的内容，力与运动的关系",
+      "category": "mechanics",
+      "order": 21,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "pressure",
+      "title": "压强",
+      "description": "压力和压强，液体压强，连通器，大气压强的存在和应用",
+      "category": "mechanics",
+      "order": 22,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "buoyancy",
+      "title": "浮力",
+      "description": "浮力产生的原因，阿基米德原理，物体的浮沉条件",
+      "category": "mechanics",
+      "order": 23,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "simple-machines",
+      "title": "简单机械",
+      "description": "杠杆、滑轮、轮轴和斜面，机械效率的概念",
+      "category": "mechanics",
+      "order": 24,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "work-power",
+      "title": "功和功率",
+      "description": "功的定义与计算，功率表示做功快慢，能量转化",
+      "category": "mechanics",
+      "order": 25,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "mechanical-efficiency",
+      "title": "机械效率",
+      "description": "有用功、额外功和总功，提高机械效率的方法",
+      "category": "mechanics",
+      "order": 26,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "electric-charge",
+      "title": "电荷与电流",
+      "description": "两种电荷、电荷间的相互作用，电流的形成和方向",
+      "category": "electricity",
+      "order": 27,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "electric-circuit",
+      "title": "电路基础",
+      "description": "电路的组成和三种状态，串联与并联电路的特点",
+      "category": "electricity",
+      "order": 28,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "current-voltage",
+      "title": "电流与电压",
+      "description": "电流表和电压表的使用，串并联电路中电流电压的规律",
+      "category": "electricity",
+      "order": 29,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "resistance",
+      "title": "电阻与变阻器",
+      "description": "电阻的概念和单位，影响电阻大小的因素，滑动变阻器的使用",
+      "category": "electricity",
+      "order": 30,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "ohms-law",
+      "title": "欧姆定律",
+      "description": "电流与电压、电阻的关系，I=U/R的应用，伏安法测电阻",
+      "category": "electricity",
+      "order": 31,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "electric-power",
+      "title": "电功率",
+      "description": "电功和电功率，额定功率和实际功率，焦耳定律",
+      "category": "electricity",
+      "order": 32,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "home-circuit",
+      "title": "家庭电路",
+      "description": "家庭电路的组成，保险丝和空气开关，安全用电常识",
+      "category": "electricity",
+      "order": 33,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
+    },
+    {
+      "id": "electricity-magnetism",
+      "title": "电与磁",
+      "description": "电流的磁效应，电动机与发电机原理，电磁波初步",
+      "category": "electricity",
+      "order": 34,
+      "status": "empty",
+      "word_count": 0,
+      "has_experiment": false,
+      "has_problems": false,
+      "last_updated": null,
+      "tags": []
     }
   ]
 }
