@@ -12,7 +12,7 @@ const GENERATION_MARK = "<!-- ai-generated -->";
 const MAX_RETRIES = 3;
 const BATCH_SIZE = Number(process.env.BATCH_SIZE || "2");
 const LLM_PROVIDER = process.env.LLM_PROVIDER || "gemini";
-const LLM_API_KEY = process.env.LLM_API_KEY || process.env.GEMINI_API_KEY || "";
+const LLM_API_KEY = process.env.LLM_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || process.env.GEMINI_API_KEY || "";
 const LLM_MODEL = process.env.LLM_MODEL || "gemini-2.0-flash";
 
 interface GenerateResult {
@@ -126,8 +126,39 @@ async function callDeepSeek(prompt: string): Promise<string> {
   return data.choices[0].message.content;
 }
 
+async function callAnthropic(prompt: string): Promise<string> {
+  const key = process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN;
+  if (!key) throw new Error("ANTHROPIC_API_KEY / ANTHROPIC_AUTH_TOKEN is not set");
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": key,
+      "anthropic-version": "2023-06-01",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: LLM_MODEL || "claude-sonnet-4-20250514",
+      max_tokens: 8192,
+      system:
+        "你是一位资深初中物理教师，擅长生成结构化的教学内容。请只输出 Markdown 文本，不要代码块包裹。",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.6,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`Anthropic API error: ${res.status} ${await res.text()}`);
+  }
+  const data = (await res.json()) as {
+    content: Array<{ type: string; text?: string }>;
+  };
+  const text = data.content?.find((c) => c.type === "text")?.text || "";
+  if (!text) throw new Error("Anthropic returned empty content");
+  return text;
+}
+
 async function callLLM(prompt: string): Promise<string> {
   if (LLM_PROVIDER === "deepseek") return callDeepSeek(prompt);
+  if (LLM_PROVIDER === "anthropic" || LLM_PROVIDER === "claude") return callAnthropic(prompt);
   return callGemini(prompt);
 }
 
