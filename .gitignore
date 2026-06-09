@@ -40,3 +40,7 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# Generated reports
+gaps-report.json
+qa-report.json

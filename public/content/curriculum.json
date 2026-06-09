@@ -1,0 +1,184 @@
+{
+  "version": "1.0.0",
+  "grade": "初中物理",
+  "semesters": [
+    {
+      "id": "grade-8-semester-1",
+      "name": "八年级上册",
+      "chapters": [
+        {
+          "id": "ch-01",
+          "title": "机械运动",
+          "status": "complete",
+          "word_count": 1200,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-02",
+          "title": "声现象",
+          "status": "complete",
+          "word_count": 850,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-03",
+          "title": "物态变化",
+          "status": "complete",
+          "word_count": 950,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-04",
+          "title": "光现象",
+          "status": "complete",
+          "word_count": 1100,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-05",
+          "title": "透镜及其应用",
+          "status": "incomplete",
+          "word_count": 320,
+          "has_experiment": false,
+          "has_problems": false
+        },
+        {
+          "id": "ch-06",
+          "title": "质量与密度",
+          "status": "empty",
+          "word_count": 0,
+          "has_experiment": false,
+          "has_problems": false
+        }
+      ]
+    },
+    {
+      "id": "grade-8-semester-2",
+      "name": "八年级下册",
+      "chapters": [
+        {
+          "id": "ch-07",
+          "title": "力",
+          "status": "complete",
+          "word_count": 1300,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-08",
+          "title": "运动和力",
+          "status": "complete",
+          "word_count": 1150,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-09",
+          "title": "压强",
+          "status": "incomplete",
+          "word_count": 280,
+          "has_experiment": false,
+          "has_problems": true
+        },
+        {
+          "id": "ch-10",
+          "title": "浮力",
+          "status": "empty",
+          "word_count": 0,
+          "has_experiment": false,
+          "has_problems": false
+        },
+        {
+          "id": "ch-11",
+          "title": "功和机械能",
+          "status": "incomplete",
+          "word_count": 450,
+          "has_experiment": true,
+          "has_problems": false
+        },
+        {
+          "id": "ch-12",
+          "title": "简单机械",
+          "status": "empty",
+          "word_count": 0,
+          "has_experiment": false,
+          "has_problems": false
+        }
+      ]
+    },
+    {
+      "id": "grade-9-semester-1",
+      "name": "九年级全一册",
+      "chapters": [
+        {
+          "id": "ch-13",
+          "title": "内能",
+          "status": "complete",
+          "word_count": 1000,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-14",
+          "title": "内能的利用",
+          "status": "complete",
+          "word_count": 900,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-15",
+          "title": "电流和电路",
+          "status": "complete",
+          "word_count": 1050,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-16",
+          "title": "电压和电阻",
+          "status": "incomplete",
+          "word_count": 380,
+          "has_experiment": false,
+          "has_problems": true
+        },
+        {
+          "id": "ch-17",
+          "title": "欧姆定律",
+          "status": "complete",
+          "word_count": 1100,
+          "has_experiment": true,
+          "has_problems": true
+        },
+        {
+          "id": "ch-18",
+          "title": "电功率",
+          "status": "incomplete",
+          "word_count": 420,
+          "has_experiment": true,
+          "has_problems": false
+        },
+        {
+          "id": "ch-19",
+          "title": "生活用电",
+          "status": "empty",
+          "word_count": 0,
+          "has_experiment": false,
+          "has_problems": false
+        },
+        {
+          "id": "ch-20",
+          "title": "电与磁",
+          "status": "empty",
+          "word_count": 0,
+          "has_experiment": false,
+          "has_problems": false
+        }
+      ]
+    }
+  ]
+}

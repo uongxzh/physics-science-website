@@ -52,6 +52,25 @@ npm run generate
 npm run validate content/problems/2026-06-08-xxx.json
 ```
 
+## 🔍 进化引擎
+
+```bash
+# 扫描课程缺口（空章节、内容不足、缺实验/习题）
+npm run scan-gaps
+# 或指定输入/输出路径
+npx tsx scripts/scan-gaps.ts [curriculum.json] [gaps-report.json]
+
+# 物理质检（公式检查 + 超纲检测 + LLM 深度审查）
+npm run physics-qa
+# 或指定章节目录/输出路径
+npx tsx scripts/physics-qa.ts [chapters-dir] [qa-report.json]
+# 需要 Gemini API Key
+$env:GEMINI_API_KEY="your-api-key"
+
+# 运行单元测试
+npm test
+```
+
 ---
 
 ## 📁 目录结构
