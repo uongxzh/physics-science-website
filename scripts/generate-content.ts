@@ -156,9 +156,41 @@ async function callAnthropic(prompt: string): Promise<string> {
   return text;
 }
 
+async function callKimi(prompt: string): Promise<string> {
+  const key = process.env.KIMI_API_KEY || process.env.MOONSHOT_API_KEY;
+  if (!key) throw new Error("KIMI_API_KEY / MOONSHOT_API_KEY is not set");
+  const res = await fetch("https://api.moonshot.cn/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: LLM_MODEL || "kimi-latest",
+      messages: [
+        {
+          role: "system",
+          content:
+            "你是一位资深初中物理教师，擅长生成结构化的教学内容。请只输出 Markdown 文本，不要代码块包裹。",
+        },
+        { role: "user", content: prompt },
+      ],
+      temperature: 0.6,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`Kimi API error: ${res.status} ${await res.text()}`);
+  }
+  const data = (await res.json()) as {
+    choices: Array<{ message: { content: string } }>;
+  };
+  return data.choices[0].message.content;
+}
+
 async function callLLM(prompt: string): Promise<string> {
   if (LLM_PROVIDER === "deepseek") return callDeepSeek(prompt);
   if (LLM_PROVIDER === "anthropic" || LLM_PROVIDER === "claude") return callAnthropic(prompt);
+  if (LLM_PROVIDER === "kimi" || LLM_PROVIDER === "moonshot") return callKimi(prompt);
   return callGemini(prompt);
 }
 
