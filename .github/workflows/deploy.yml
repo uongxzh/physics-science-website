@@ -68,7 +68,7 @@ jobs:
           temporaryPublicStorage: true
 
   deploy:
-    needs: [build, lighthouse]
+    needs: [build]
     if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
