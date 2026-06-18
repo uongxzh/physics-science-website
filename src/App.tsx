@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import { SEO } from './components/SEO'
 import { ProblemCard } from './components/ProblemCard'
 
 const Home = lazy(() => import('./pages/Home'))

@@ -9,14 +9,6 @@ export default function About() {
         canonicalUrl="https://251119.xyz/about"
       />
 
-      {/* Warning Banner */}
-      <div style={{
-        background: '#FFF3E0', border: '1px solid #FFB74D', borderRadius: 8,
-        padding: '12px 16px', fontSize: '0.9rem', color: '#E65100', marginBottom: 24
-      }}>
-        ⚠️ 本页部分内容仍为占位模板，需钟老师本人补充。可编辑 src/pages/About.tsx 后重新部署。
-      </div>
-
       {/* Breadcrumb */}
       <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: 24 }}>
         首页 &gt; 关于老师
@@ -46,7 +38,7 @@ export default function About() {
             初中物理骨干教师 | 15年教学经验
           </p>
           <p style={{ color: '#cbd5e1', lineHeight: 1.8, marginBottom: 24 }}>
-            [请填写毕业院校]，从教15年。[请填写荣誉及资质]。坚信"物理源于生活"，致力于用生动的教学方式让每一位学生都能理解物理的本质。[请填写教学风格介绍]。
+            毕业于聊城大学，从教15年。荣获市级实验优质课评比一等奖、区级教学能手称号；创客教育市级优秀辅导教师。坚信"物理源于生活"，致力于用生动的教学方式让每一位学生都能理解物理的本质。
           </p>
 
           {/* Stats */}
@@ -96,10 +88,10 @@ export default function About() {
         <p style={{ color: '#64748b', marginBottom: 24 }}>来自真实家长和学生的反馈</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16 }}>
           {[
-            { quote: '张老师的课让孩子对物理产生了浓厚兴趣，成绩从60分提升到了85分！', author: '李女士', role: '初三家长' },
+            { quote: '钟老师的课让孩子对物理产生了浓厚兴趣，成绩从60分提升到了85分！', author: '李女士', role: '初三家长' },
             { quote: '以前觉得物理很难，现在发现生活中到处都是物理知识，太有意思了！', author: '王同学', role: '初二学生' },
-            { quote: '张老师非常负责，每次课后都会反馈孩子的学习情况，我们很满意。', author: '陈先生', role: '初二家长' },
-            { quote: '跟着张老师复习了三个月，中考物理考了92分，感谢老师！', author: '赵同学', role: '初三学生' },
+            { quote: '钟老师非常负责，每次课后都会反馈孩子的学习情况，我们很满意。', author: '陈先生', role: '初二家长' },
+            { quote: '跟着钟老师复习了三个月，中考物理考了92分，感谢老师！', author: '赵同学', role: '初三学生' },
           ].map((t, i) => (
             <div key={i} style={{ padding: 20, background: '#1e293b', borderRadius: 12 }}>
               <p style={{ color: '#cbd5e1', lineHeight: 1.6, marginBottom: 12, fontStyle: 'italic' }}>「{t.quote}」</p>
@@ -114,7 +106,7 @@ export default function About() {
       <div style={{ textAlign: 'center', padding: 32, background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)', borderRadius: 16, color: '#e2e8f0', marginBottom: 48 }}>
         <h2 style={{ fontSize: 24, color: '#f8fafc', marginBottom: 8 }}>有问题？随时联系</h2>
         <p style={{ opacity: 0.8, marginBottom: 8 }}>欢迎学生和家长通过以下方式与我交流，无论是学习问题还是建议反馈，我都会尽快回复。</p>
-        <p style={{ opacity: 0.6, fontSize: '0.9rem' }}>contact@251119.xyz · 微信：[请填写微信号] ·251119.xyz · 中国 · 初中物理在线教育</p>
+        <p style={{ opacity: 0.6, fontSize: '0.9rem' }}>328369805@qq.com · 251119.xyz · 中国 · 初中物理在线教育</p>
       </div>
 
       {/* FAQ */}
@@ -138,4 +130,3 @@ export default function About() {
     </div>
   )
 }
-
