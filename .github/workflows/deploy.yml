@@ -1,21 +1,16 @@
-name: Deploy to GitHub Pages
+name: Deploy to Vercel
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: vercel
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,22 +33,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Deploy to Vercel
         env:
-          VITE_SITE_URL: https://251119.xyz
-
-      - name: Copy index.html to 404.html
-        run: cp dist/index.html dist/404.html
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

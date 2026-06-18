@@ -40,3 +40,4 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+.vercel
