@@ -30,7 +30,7 @@ export default function Problems() {
   const [grade, setGrade] = useState('')
 
   useEffect(() => {
-    fetch('/content/problems.json')
+    fetch('/content/problem-index.json')
       .then(r => r.json())
       .then((json) => {
         setData(json)
