@@ -7,6 +7,7 @@ const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const Experiments = lazy(() => import('./pages/Experiments'))
 const Videos = lazy(() => import('./pages/Videos'))
+const Problems = lazy(() => import('./pages/Problems'))
 
 function Loading() {
   return (
@@ -52,6 +53,10 @@ function Navbar() {
           onMouseEnter={(e) => { e.currentTarget.style.color = '#f8fafc'; e.currentTarget.style.background = '#1e293b' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.background = 'transparent' }}
         >🎬 视频</Link>
+        <Link to="/problems" style={linkStyle}
+          onMouseEnter={(e) => { e.currentTarget.style.color = '#f8fafc'; e.currentTarget.style.background = '#1e293b' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.background = 'transparent' }}
+        >✍️ 题库</Link>
         <Link to="/about" style={linkStyle}
           onMouseEnter={(e) => { e.currentTarget.style.color = '#f8fafc'; e.currentTarget.style.background = '#1e293b' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.background = 'transparent' }}
@@ -70,16 +75,18 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/experiments" element={<Experiments />} />
         <Route path="/videos" element={<Videos />} />
-        <Route path="/problem/:filePath" element={<ProblemCardWrapper />} />
+        <Route path="/problems" element={<Problems />} />
+        <Route path="/problem/*" element={<ProblemCardWrapper />} />
       </Routes>
     </Suspense>
   )
 }
 
 function ProblemCardWrapper() {
-  const { filePath } = useParams<{ filePath: string }>()
+  const { '*': filePath } = useParams<{ '*': string }>()
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: 24 }}>
+    <div style={{ maxWidth: 800, margin: '0 auto', padding: 24, background: '#0f172a', minHeight: '100vh' }}>
+      <Link to="/problems" style={{ color: '#94a3b8', textDecoration: 'none', display: 'inline-block', marginBottom: 16 }}>← 返回题库</Link>
       <ProblemCard filePath={`/content/problems/${filePath}`} />
     </div>
   )

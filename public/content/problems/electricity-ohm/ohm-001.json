@@ -1,0 +1,28 @@
+{
+  "id": "ohm-001",
+  "title": "欧姆定律应用",
+  "question": "一个电阻两端的电压为 6 V 时，通过它的电流为 0.3 A，则该电阻的阻值为（　）",
+  "options": [
+    "2 Ω",
+    "5 Ω",
+    "10 Ω",
+    "20 Ω"
+  ],
+  "answer": "D",
+  "explanation": "根据欧姆定律 I = U/R，可得 R = U/I = 6 V / 0.3 A = 20 Ω。",
+  "keyPoint": "欧姆定律 I = U/R",
+  "mistake": "计算时弄清电压、电流、电阻的对应关系",
+  "difficulty": 2,
+  "chapter": "探究电路",
+  "grade": "九年级",
+  "tags": [
+    "欧姆定律",
+    "电阻计算"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "欧姆定律",
+    "grade": "九年级"
+  }
+}

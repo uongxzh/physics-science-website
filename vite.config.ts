@@ -9,6 +9,7 @@ const dynamicRoutes = [
   '/about',
   '/experiments',
   '/videos',
+  '/problems',
 ];
 
 export default defineConfig(({ mode }) => ({

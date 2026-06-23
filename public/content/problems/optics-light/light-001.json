@@ -1,0 +1,28 @@
+{
+  "id": "light-001",
+  "title": "光的反射定律",
+  "question": "如图所示，一束光线斜射到平面镜上发生反射。若入射角为 40°，则反射角为（　）",
+  "options": [
+    "20°",
+    "40°",
+    "50°",
+    "80°"
+  ],
+  "answer": "B",
+  "explanation": "根据光的反射定律，反射角等于入射角。入射角是入射光线与法线的夹角，所以反射角也是 40°。",
+  "keyPoint": "反射定律：反射角等于入射角",
+  "mistake": "容易把入射光线与镜面的夹角误当成入射角",
+  "difficulty": 2,
+  "chapter": "多彩的光",
+  "grade": "八年级",
+  "tags": [
+    "光的反射",
+    "反射定律"
+  ],
+  "image": "/content/problems/images/reflection.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "光的反射",
+    "grade": "八年级"
+  }
+}

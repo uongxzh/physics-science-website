@@ -1,0 +1,28 @@
+{
+  "id": "circuit-001",
+  "title": "串联电路特点",
+  "question": "如图所示，三个灯泡 L1、L2、L3 串联在电路中。若 L2 断路，则（　）",
+  "options": [
+    "L1、L3 仍然发光",
+    "L1、L2、L3 都不发光",
+    "只有 L2 不发光",
+    "只有 L1 不发光"
+  ],
+  "answer": "B",
+  "explanation": "串联电路中只有一条电流路径，任何一处断路，整个电路都断开，所有用电器都不工作。",
+  "keyPoint": "串联电路的电流路径只有一条",
+  "mistake": "误以为串联中某个用电器断路不影响其他用电器",
+  "difficulty": 2,
+  "chapter": "了解电路",
+  "grade": "九年级",
+  "tags": [
+    "串联电路",
+    "电流路径"
+  ],
+  "image": "/content/problems/images/circuit.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "串联电路",
+    "grade": "九年级"
+  }
+}

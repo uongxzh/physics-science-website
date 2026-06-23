@@ -64,6 +64,29 @@ export default function Home() {
           >
             🎬 视频课堂
           </Link>
+          <Link
+            to="/problems"
+            style={{
+              background: 'transparent',
+              color: '#e2e8f0',
+              padding: '12px 28px',
+              borderRadius: 8,
+              textDecoration: 'none',
+              fontWeight: 500,
+              border: '1px solid #475569',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#1e293b'
+              e.currentTarget.style.borderColor = '#64748b'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.borderColor = '#475569'
+            }}
+          >
+            ✍️ 题库与练习
+          </Link>
         </div>
       </header>
 
@@ -78,6 +101,7 @@ export default function Home() {
               { title: '电学', desc: '电路、欧姆定律、电功率、电磁', img: '/circuit-flow.png', link: '/experiments?category=electricity' },
               { title: '声学', desc: '声音的产生、传播、特性与应用', img: '/sound-waves.png', link: '/experiments?category=waves' },
               { title: '视频课程', desc: '精选名师讲解，深入浅出学物理', img: '/student-learning.jpg', link: '/videos' },
+              { title: '题库与练习', desc: '沪科版同步题库，巩固知识点', img: '/formula-chalkboard.jpg', link: '/problems' },
             ].map((item) => (
               <Link
                 key={item.title}

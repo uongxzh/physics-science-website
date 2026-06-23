@@ -1,0 +1,28 @@
+{
+  "id": "light-003",
+  "title": "凸透镜成像规律",
+  "question": "把物体放在凸透镜前 15 cm 处，在光屏上成倒立、放大的实像，则该凸透镜的焦距可能是（　）",
+  "options": [
+    "5 cm",
+    "10 cm",
+    "15 cm",
+    "20 cm"
+  ],
+  "answer": "B",
+  "explanation": "成倒立放大实像的条件是 f < u < 2f。已知 u = 15 cm，所以 f < 15 < 2f，即 7.5 cm < f < 15 cm，选项中只有 10 cm 符合。",
+  "keyPoint": "凸透镜成像规律：f < u < 2f 成倒立放大实像",
+  "mistake": "混淆物距与焦距的关系",
+  "difficulty": 3,
+  "chapter": "多彩的光",
+  "grade": "八年级",
+  "tags": [
+    "凸透镜",
+    "成像规律"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "凸透镜成像",
+    "grade": "八年级"
+  }
+}

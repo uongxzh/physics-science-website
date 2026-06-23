@@ -1,0 +1,28 @@
+{
+  "id": "magnet-001",
+  "title": "磁感线方向",
+  "question": "如图所示，一个条形磁铁的磁感线如图。关于磁感线的说法正确的是（　）",
+  "options": [
+    "磁感线从 S 极出发，从 N 极返回",
+    "磁感线从 N 极出发，从 S 极返回",
+    "磁感线可以相交",
+    "磁感线实际上不存在"
+  ],
+  "answer": "B",
+  "explanation": "在磁体外部，磁感线从 N 极出发，回到 S 极。磁感线不会相交，且是为了形象描述磁场而假想的。",
+  "keyPoint": "磁感线在磁体外部从 N 极到 S 极",
+  "mistake": "混淆磁体内外磁感线的方向",
+  "difficulty": 2,
+  "chapter": "电流的磁场",
+  "grade": "九年级",
+  "tags": [
+    "磁感线",
+    "磁场"
+  ],
+  "image": "/content/problems/images/magnet.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "磁感线",
+    "grade": "九年级"
+  }
+}

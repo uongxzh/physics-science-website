@@ -1,0 +1,28 @@
+{
+  "id": "motion-001",
+  "title": "小明上学路上的平均速度",
+  "question": "小明从家到学校，前一半路程的速度是 4 m/s，后一半路程的速度是 6 m/s，则他全程的平均速度是（　）",
+  "options": [
+    "4.5 m/s",
+    "4.8 m/s",
+    "5 m/s",
+    "5.2 m/s"
+  ],
+  "answer": "B",
+  "explanation": "设总路程为 2s，则总时间 t = s/4 + s/6 = 5s/12，平均速度 v = 2s / (5s/12) = 4.8 m/s。",
+  "keyPoint": "平均速度 = 总路程 / 总时间",
+  "mistake": "容易误把 (4+6)/2 = 5 m/s 当作答案",
+  "difficulty": 3,
+  "chapter": "运动的世界",
+  "grade": "八年级",
+  "tags": [
+    "速度",
+    "平均速度"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "机械运动",
+    "grade": "八年级"
+  }
+}

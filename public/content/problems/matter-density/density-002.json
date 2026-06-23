@@ -1,0 +1,28 @@
+{
+  "id": "density-002",
+  "title": "密度计算",
+  "question": "一块金属的质量是 540 g，体积是 200 cm³，则这种金属的密度是（　）",
+  "options": [
+    "2.7 g/cm³",
+    "0.37 g/cm³",
+    "2.7 kg/m³",
+    "2700 g/cm³"
+  ],
+  "answer": "A",
+  "explanation": "根据 ρ = m/V = 540 g / 200 cm³ = 2.7 g/cm³。",
+  "keyPoint": "密度公式 ρ = m/V",
+  "mistake": "容易弄错单位，如把 g/cm³ 与 kg/m³ 混淆",
+  "difficulty": 2,
+  "chapter": "质量与密度",
+  "grade": "八年级",
+  "tags": [
+    "密度",
+    "计算"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "密度计算",
+    "grade": "八年级"
+  }
+}

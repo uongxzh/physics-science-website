@@ -1,0 +1,28 @@
+{
+  "id": "density-001",
+  "title": "密度图像分析",
+  "question": "如图所示是物质 A 和 B 的质量—体积图像。由图可知（　）",
+  "options": [
+    "A 的密度比 B 大",
+    "B 的密度比 A 大",
+    "A 和 B 密度相同",
+    "无法判断"
+  ],
+  "answer": "B",
+  "explanation": "由 ρ = m/V 可知，在 m-V 图像中，斜率越大，密度越大。B 的斜率大于 A，所以 B 的密度更大。",
+  "keyPoint": "密度图像的斜率代表密度",
+  "mistake": "弄清横纵坐标代表的物理量",
+  "difficulty": 3,
+  "chapter": "质量与密度",
+  "grade": "八年级",
+  "tags": [
+    "密度",
+    "图像"
+  ],
+  "image": "/content/problems/images/density.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "密度",
+    "grade": "八年级"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "thermal-001",
+  "title": "温度计读数",
+  "question": "如图所示，温度计的示数为（　）",
+  "options": [
+    "20℃",
+    "22℃",
+    "24℃",
+    "26℃"
+  ],
+  "answer": "B",
+  "explanation": "温度计分度值为 2℃，液柱上表面在 20℃ 以上 1 小格，读数为 22℃。",
+  "keyPoint": "温度计读数方法",
+  "mistake": "温度计零点以上还是以下弄混",
+  "difficulty": 1,
+  "chapter": "温度与物态变化",
+  "grade": "九年级",
+  "tags": [
+    "温度计",
+    "读数"
+  ],
+  "image": "/content/problems/images/thermometer.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "温度计",
+    "grade": "九年级"
+  }
+}

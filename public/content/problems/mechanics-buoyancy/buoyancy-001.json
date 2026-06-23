@@ -1,0 +1,28 @@
+{
+  "id": "buoyancy-001",
+  "title": "浮沉条件",
+  "question": "如图所示，木块漂浮在水面上。下列说法正确的是（　）",
+  "options": [
+    "F浮 > G",
+    "F浮 = G",
+    "F浮 < G",
+    "无法判断"
+  ],
+  "answer": "B",
+  "explanation": "木块漂浮在水面上，处于平衡状态，浮力等于重力，即 F浮 = G。",
+  "keyPoint": "漂浮条件：漂浮时 F浮 = G",
+  "mistake": "误以为漂浮的物体浮力大于重力",
+  "difficulty": 2,
+  "chapter": "浮力",
+  "grade": "八年级",
+  "tags": [
+    "浮力",
+    "漂浮条件"
+  ],
+  "image": "/content/problems/images/float.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "浮力",
+    "grade": "八年级"
+  }
+}

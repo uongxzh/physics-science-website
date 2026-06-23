@@ -1,0 +1,28 @@
+{
+  "id": "power-001",
+  "title": "电功率计算",
+  "question": "一盏节能灯的额定电压为 220 V，额定功率为 11 W，则它正常发光时的电流约为（　）",
+  "options": [
+    "0.05 A",
+    "0.5 A",
+    "0.02 A",
+    "2 A"
+  ],
+  "answer": "A",
+  "explanation": "由 P = UI 可得 I = P/U = 11 W / 220 V = 0.05 A。",
+  "keyPoint": "电功率公式 P = UI",
+  "mistake": "计算时弄错小数点位置",
+  "difficulty": 2,
+  "chapter": "电流做功与电功率",
+  "grade": "九年级",
+  "tags": [
+    "电功率",
+    "电流"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "电功率",
+    "grade": "九年级"
+  }
+}

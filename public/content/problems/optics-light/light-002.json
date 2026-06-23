@@ -1,0 +1,27 @@
+{
+  "id": "light-002",
+  "title": "平面镜成像特点",
+  "question": "如图所示，物体 S 在平面镜中所成的像 S' 关于平面镜（　）",
+  "options": [
+    "等大、等距、正立",
+    "等大、等距、倒立",
+    "放大、等距、正立",
+    "缩小、等距、正立"
+  ],
+  "answer": "A",
+  "explanation": "平面镜成像特点是：像与物大小相等，像到镜面的距离等于物到镜面的距离，成正立的虚像。",
+  "keyPoint": "平面镜成像特点",
+  "mistake": "误以为平面镜成像会放大或倒立",
+  "difficulty": 2,
+  "chapter": "多彩的光",
+  "grade": "八年级",
+  "tags": [
+    "平面镜成像"
+  ],
+  "image": "/content/problems/images/mirror.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "平面镜成像",
+    "grade": "八年级"
+  }
+}

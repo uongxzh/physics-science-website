@@ -1,0 +1,28 @@
+{
+  "id": "gravity-001",
+  "title": "重力的方向",
+  "question": "如图所示，重力的方向是（　）",
+  "options": [
+    "向上",
+    "向下",
+    "垂直向上",
+    "垂直向下"
+  ],
+  "answer": "D",
+  "explanation": "重力是由于地球的吸引而使物体受到的力，重力的方向始终是竖直向下的。",
+  "keyPoint": "重力的方向竖直向下",
+  "mistake": "误以为重力方向简单地“向下”，忽略“竖直”",
+  "difficulty": 1,
+  "chapter": "熟悉而陌生的力",
+  "grade": "八年级",
+  "tags": [
+    "重力",
+    "方向"
+  ],
+  "image": "/content/problems/images/gravity.svg",
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "重力",
+    "grade": "八年级"
+  }
+}

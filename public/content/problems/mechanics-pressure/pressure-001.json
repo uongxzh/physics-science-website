@@ -1,0 +1,28 @@
+{
+  "id": "pressure-001",
+  "title": "液体压强计算",
+  "question": "一个水杯中水的深度为 10 cm，则杯底受到水的压强为多少？（g 取 10 N/kg）",
+  "options": [
+    "100 Pa",
+    "1000 Pa",
+    "2000 Pa",
+    "10000 Pa"
+  ],
+  "answer": "B",
+  "explanation": "液体压强 p = ρgh = 1.0×10³ kg/m³ × 10 N/kg × 0.1 m = 1000 Pa。",
+  "keyPoint": "液体压强公式 p = ρgh",
+  "mistake": "深度单位未换算成米",
+  "difficulty": 2,
+  "chapter": "压强",
+  "grade": "八年级",
+  "tags": [
+    "液体压强",
+    "计算"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "液体压强",
+    "grade": "八年级"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "thermal-002",
+  "title": "物态变化判断",
+  "question": "下列现象中，属于凝固的是（　）",
+  "options": [
+    "霓虹灯管壁出现小水珠",
+    "河水结冰",
+    "浸湿的衣服晒干",
+    "冰糕冒白气"
+  ],
+  "answer": "B",
+  "explanation": "河水结冰是液态变成固态，属于凝固。A 是液化，C 是汽化，D 是液化。",
+  "keyPoint": "六种物态变化的区别",
+  "mistake": "液化和汽化弄混",
+  "difficulty": 2,
+  "chapter": "温度与物态变化",
+  "grade": "九年级",
+  "tags": [
+    "物态变化",
+    "凝固"
+  ],
+  "image": null,
+  "meta": {
+    "generatedAt": "2026-06-23",
+    "topic": "物态变化",
+    "grade": "九年级"
+  }
+}

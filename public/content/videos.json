@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-01",
+  "last_updated": "2026-06-23",
   "description": "初中物理视频学习资源库",
   "categories": [
     {
@@ -7,24 +7,30 @@
       "name": "力学",
       "videos": [
         {
-          "id": "vid-001",
-          "title": "牛顿第一定律 - 惯性",
-          "description": "通过生活中的例子理解惯性原理",
+          "id": "newton-first-law",
+          "title": "【初中物理】牛顿第一定律！全网最清晰！",
+          "description": "系统讲解牛顿第一定律与惯性概念，适合课前预习与课后复习",
           "platform": "bilibili",
-          "bvid": "BV1xx411c7mD",
-          "duration": "08:32",
+          "bvid": "BV183NwzHE84",
+          "duration": "12:43",
           "thumbnail": "",
-          "tags": ["牛顿定律", "惯性"]
+          "tags": [
+            "牛顿定律",
+            "惯性"
+          ]
         },
         {
-          "id": "vid-002",
-          "title": "浮力原理 - 阿基米德",
-          "description": "从实际实验出发讲解浮力产生的原因",
+          "id": "buoyancy-archimedes",
+          "title": "【初中物理】一节课学透浮力，阿基米德原理！",
+          "description": "通过实例推导浮力大小，深入理解阿基米德原理",
           "platform": "bilibili",
-          "bvid": "BV1xx411c7mE",
-          "duration": "12:15",
+          "bvid": "BV1mFoQBYEVA",
+          "duration": "17:57",
           "thumbnail": "",
-          "tags": ["浮力", "阿基米德"]
+          "tags": [
+            "浮力",
+            "阿基米德原理"
+          ]
         }
       ]
     },
@@ -33,14 +39,126 @@
       "name": "电学",
       "videos": [
         {
-          "id": "vid-003",
-          "title": "串并联电路辨析",
-          "description": "快速判断串并联电路的方法与技巧",
+          "id": "ohms-law-comprehensive",
+          "title": "【初中物理】彻底学会欧姆定律，串并联电路计算",
+          "description": "欧姆定律、串并联电路与动态分析综合讲解",
           "platform": "bilibili",
-          "bvid": "BV1xx411c7mF",
-          "duration": "10:45",
+          "bvid": "BV1FPyGBLE7o",
+          "duration": "18:50",
           "thumbnail": "",
-          "tags": ["电路", "串并联"]
+          "tags": [
+            "欧姆定律",
+            "串并联电路"
+          ]
+        },
+        {
+          "id": "ohms-law-quick",
+          "title": "【初中物理】“剪掉课堂多余对话”10分钟拿下欧姆定律",
+          "description": "十分钟高效梳理欧姆定律核心要点与常见题型",
+          "platform": "bilibili",
+          "bvid": "BV1GPBRYVEsV",
+          "duration": "17:11",
+          "thumbnail": "",
+          "tags": [
+            "欧姆定律",
+            "快速复习"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optics-videos",
+      "name": "光学",
+      "videos": [
+        {
+          "id": "lens-imaging-memory",
+          "title": "【中考物理】我是这样记住凸透镜成像规律的",
+          "description": "用口诀和图像快速记忆凸透镜成像规律",
+          "platform": "bilibili",
+          "bvid": "BV1H64y1u7A2",
+          "duration": "10:27",
+          "thumbnail": "",
+          "tags": [
+            "凸透镜",
+            "成像规律"
+          ]
+        },
+        {
+          "id": "lens-imaging-problems",
+          "title": "【中考物理】凸透镜成像规律必考题型！一学就会！",
+          "description": "凸透镜成像经典题型与解题技巧",
+          "platform": "bilibili",
+          "bvid": "BV1sUAfzvENn",
+          "duration": "15:17",
+          "thumbnail": "",
+          "tags": [
+            "凸透镜",
+            "中考题型"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thermal-videos",
+      "name": "热学",
+      "videos": [
+        {
+          "id": "melting-freezing",
+          "title": "初中物理 无生试讲 熔化和凝固",
+          "description": "熔化与凝固实验现象及温度变化分析",
+          "platform": "bilibili",
+          "bvid": "BV1jm4y1U77p",
+          "duration": "10:00",
+          "thumbnail": "",
+          "tags": [
+            "熔化",
+            "凝固"
+          ]
+        },
+        {
+          "id": "state-changes-summary",
+          "title": "『初中物理』『热学』1、六种物态变化及解题两个口诀",
+          "description": "六种物态变化归纳与快速判断口诀",
+          "platform": "bilibili",
+          "bvid": "BV11EHLeaEjF",
+          "duration": "38:08",
+          "thumbnail": "",
+          "tags": [
+            "物态变化",
+            "热学"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "waves-videos",
+      "name": "声学",
+      "videos": [
+        {
+          "id": "sound-production",
+          "title": "2.1声音的产生与传播 人教版 初中物理八年级上册",
+          "description": "声音的产生条件、传播需要介质及声速",
+          "platform": "bilibili",
+          "bvid": "BV1hT411N7p4",
+          "duration": "24:18",
+          "thumbnail": "",
+          "tags": [
+            "声音",
+            "传播"
+          ]
+        },
+        {
+          "id": "sound-review",
+          "title": "【中考物理】10分钟搞定中考物理复习 声现象",
+          "description": "中考声现象考点快速复习",
+          "platform": "bilibili",
+          "bvid": "BV1cxAueZEKE",
+          "duration": "17:05",
+          "thumbnail": "",
+          "tags": [
+            "声现象",
+            "中考复习"
+          ]
         }
       ]
     }
@@ -54,7 +172,10 @@
       "platform": "bilibili 或 youtube",
       "bvid": "Bilibili BV号（如 BV1xx411c7mD）",
       "duration": "时长",
-      "tags": ["标签1", "标签2"]
+      "tags": [
+        "标签1",
+        "标签2"
+      ]
     },
     "note": "视频请先上传到 Bilibili（国内访问最快），然后把 BV 号填入此处"
   }
