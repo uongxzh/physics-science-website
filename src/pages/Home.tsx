@@ -72,11 +72,11 @@ export default function Home() {
           <h2 style={{ fontSize: 32, marginBottom: 32, textAlign: 'center' }}>探索物理世界</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
             {[
-              { title: '力学', desc: '力与运动、压强、浮力、简单机械', img: '/force-diagram.png', link: '/experiments' },
-              { title: '光学', desc: '光的传播、反射、折射、透镜成像', img: '/light-prism.png', link: '/experiments' },
-              { title: '热学', desc: '温度、热量、比热容、物态变化', img: '/heat-molecules.png', link: '/experiments' },
-              { title: '电学', desc: '电路、欧姆定律、电功率、电磁', img: '/circuit-flow.png', link: '/experiments' },
-              { title: '声学', desc: '声音的产生、传播、特性与应用', img: '/sound-waves.png', link: '/experiments' },
+              { title: '力学', desc: '力与运动、压强、浮力、简单机械', img: '/force-diagram.png', link: '/experiments?category=mechanics' },
+              { title: '光学', desc: '光的传播、反射、折射、透镜成像', img: '/light-prism.png', link: '/experiments?category=optics' },
+              { title: '热学', desc: '温度、热量、比热容、物态变化', img: '/heat-molecules.png', link: '/experiments?category=thermal' },
+              { title: '电学', desc: '电路、欧姆定律、电功率、电磁', img: '/circuit-flow.png', link: '/experiments?category=electricity' },
+              { title: '声学', desc: '声音的产生、传播、特性与应用', img: '/sound-waves.png', link: '/experiments?category=waves' },
               { title: '视频课程', desc: '精选名师讲解，深入浅出学物理', img: '/student-learning.jpg', link: '/videos' },
             ].map((item) => (
               <Link

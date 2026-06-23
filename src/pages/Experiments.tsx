@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 
 interface Experiment {
@@ -26,6 +26,7 @@ interface ExperimentsData {
 }
 
 export default function Experiments() {
+  const [searchParams] = useSearchParams()
   const [data, setData] = useState<ExperimentsData | null>(null)
   const [activeCategory, setActiveCategory] = useState<string>('')
   const [activeExperiment, setActiveExperiment] = useState<Experiment | null>(null)
@@ -36,13 +37,17 @@ export default function Experiments() {
       .then((res) => res.json())
       .then((json) => {
         setData(json)
-        if (json.categories?.length > 0) {
+        const urlCategory = searchParams.get('category')
+        const validIds = json.categories?.map((c: Category) => c.id) ?? []
+        if (urlCategory && validIds.includes(urlCategory)) {
+          setActiveCategory(urlCategory)
+        } else if (json.categories?.length > 0) {
           setActiveCategory(json.categories[0].id)
         }
         setLoading(false)
       })
       .catch(() => setLoading(false))
-  }, [])
+  }, [searchParams])
 
   const currentCategory = data?.categories.find((c) => c.id === activeCategory)
 
