@@ -44,3 +44,5 @@ dist-ssr
 
 # Claude Code
 .claude/
+scripts/
+worker/

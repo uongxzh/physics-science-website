@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 
 interface Experiment {
@@ -64,9 +65,9 @@ export default function Experiments() {
       {/* Header */}
       <header style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%)', color: 'white', padding: '40px 0 32px', textAlign: 'center' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
-          <a href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.875rem', marginBottom: 16 }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.875rem', marginBottom: 16 }}>
             ← 返回首页
-          </a>
+          </Link>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: 8 }}>🔬 虚拟实验室</h1>
           <p style={{ fontSize: '0.9375rem', opacity: 0.85, maxWidth: 500, margin: '0 auto' }}>
             在线操作 PhET 互动实验，亲手验证物理定律

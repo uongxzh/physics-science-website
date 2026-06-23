@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 
 export default function About() {
@@ -11,7 +12,7 @@ export default function About() {
 
       {/* Breadcrumb */}
       <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: 24 }}>
-        首页 &gt; 关于老师
+        <Link to="/" style={{ color: '#64748b', textDecoration: 'none' }}>首页</Link> &gt; 关于老师
       </div>
 
       {/* Profile Section */}

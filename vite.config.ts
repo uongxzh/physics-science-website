@@ -6,15 +6,9 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 const dynamicRoutes = [
   '/',
-  '/mechanics/motion',
-  '/mechanics/force',
-  '/electricity/circuit',
-  '/electricity/magnetism',
-  '/optics/light',
-  '/thermal/heat',
-  '/sound/waves',
-  '/experiments',
   '/about',
+  '/experiments',
+  '/videos',
 ];
 
 export default defineConfig(({ mode }) => ({

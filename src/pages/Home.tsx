@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 
 export default function Home() {
@@ -24,8 +25,8 @@ export default function Home() {
         </p>
 
         <div style={{ marginTop: 32, display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a
-            href="/experiments"
+          <Link
+            to="/experiments"
             style={{
               background: '#3b82f6',
               color: 'white',
@@ -39,9 +40,9 @@ export default function Home() {
             onMouseLeave={(e) => (e.currentTarget.style.background = '#3b82f6')}
           >
             🔬 虚拟实验室
-          </a>
-          <a
-            href="/videos"
+          </Link>
+          <Link
+            to="/videos"
             style={{
               background: 'transparent',
               color: '#e2e8f0',
@@ -62,7 +63,7 @@ export default function Home() {
             }}
           >
             🎬 视频课堂
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -78,9 +79,9 @@ export default function Home() {
               { title: '声学', desc: '声音的产生、传播、特性与应用', img: '/sound-waves.png', link: '/experiments' },
               { title: '视频课程', desc: '精选名师讲解，深入浅出学物理', img: '/student-learning.jpg', link: '/videos' },
             ].map((item) => (
-              <a
+              <Link
                 key={item.title}
-                href={item.link}
+                to={item.link}
                 style={{
                   background: '#1e293b',
                   borderRadius: 16,
@@ -97,7 +98,7 @@ export default function Home() {
                   <h3 style={{ fontSize: 20, marginBottom: 8, color: '#f8fafc' }}>{item.title}</h3>
                   <p style={{ color: '#94a3b8', fontSize: 14 }}>{item.desc}</p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </section>
