@@ -10,6 +10,7 @@ interface Problem {
   mistake: string
   difficulty: number
   chapter: string
+  image?: string
   meta: {
     generatedAt: string
     topic: string
@@ -78,6 +79,23 @@ export function ProblemCard({ filePath }: { filePath: string }) {
       </header>
 
       <h2 style={{ fontSize: 20, marginBottom: 16, color: '#f8fafc' }}>{problem.title}</h2>
+
+      {problem.image && (
+        <img
+          src={problem.image}
+          alt={problem.title}
+          style={{
+            width: '100%',
+            maxWidth: 480,
+            maxHeight: 260,
+            objectFit: 'contain',
+            marginBottom: 16,
+            borderRadius: 12,
+            background: '#0f172a',
+            display: 'block',
+          }}
+        />
+      )}
 
       <div
         style={{ marginBottom: 16, lineHeight: 1.8 }}
