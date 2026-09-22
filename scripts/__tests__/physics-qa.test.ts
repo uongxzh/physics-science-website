@@ -108,6 +108,22 @@ describe("runStructuredQA", () => {
     const violations = runStructuredQA("electric-circuit", content);
     expect(violations.some((v) => v.type === "safety" && v.message.includes("\u77ed\u8def"))).toBe(true);
   });
+
+  it("warns when Newton's first law omits its condition", () => {
+    const content = `\u725b\u987f\u7b2c\u4e00\u5b9a\u5f8b\uff1a\u7269\u4f53\u4fdd\u6301\u9759\u6b62\u6216\u5300\u901f\u76f4\u7ebf\u8fd0\u52a8\u72b6\u6001\u3002`;
+    const violations = runStructuredQA("newtons-first-law", content);
+    expect(
+      violations.some((v) => v.message.includes("\u725b\u987f\u7b2c\u4e00\u5b9a\u5f8b") && v.message.includes("\u6761\u4ef6"))
+    ).toBe(true);
+  });
+
+  it("detects the misconception that force maintains motion", () => {
+    const content = `\u529b\u662f\u7ef4\u6301\u7269\u4f53\u8fd0\u52a8\u7684\u539f\u56e0\u3002`;
+    const violations = runStructuredQA("newtons-first-law", content);
+    expect(
+      violations.some((v) => v.message.includes("\u7ef4\u6301") && v.message.includes("\u6539\u53d8"))
+    ).toBe(true);
+  });
 });
 
 describe("runLLMQA", () => {
@@ -127,10 +143,21 @@ describe("runLLMQA", () => {
   });
 
   it("gracefully handles API errors", async () => {
-    const violations = await runLLMQA("ch-01", "test", "invalid-key-12345");
-    expect(violations.some((v) => v.message.includes("LLM \u8d28\u68c0\u8c03\u7528\u5931\u8d25"))).toBe(
-      true
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw new Error("network unavailable");
+      })
     );
+
+    try {
+      const violations = await runLLMQA("ch-01", "test", "invalid-key-12345");
+      expect(
+        violations.some((v) => v.message.includes("LLM \u8d28\u68c0\u8c03\u7528\u5931\u8d25"))
+      ).toBe(true);
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });
 

@@ -1,0 +1,86 @@
+name: Content Bug Triage
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  triage:
+    if: |
+      contains(github.event.issue.labels.*.name, 'content-bug') ||
+      contains(github.event.issue.title, '[content-bug]') ||
+      contains(github.event.issue.body, 'content-bug')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add content-bug label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const hasLabel = (issue.labels || []).some((label) => label.name === 'content-bug');
+            if (!hasLabel) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: ['content-bug'],
+              });
+            }
+
+      - name: Extract chapter id
+        id: extract
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const body = context.payload.issue.body || '';
+            const match = body.match(/- ID:\s*([^\n\r]+)/);
+            return match ? match[1].trim() : 'unknown';
+
+      - name: Comment triage info
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const chapterId = '${{ steps.extract.outputs.result }}';
+            const body = [
+              '## 内容纠错反馈已收到 ✅',
+              '',
+              `- 章节 ID：\`${chapterId}\``,
+              `- Issue：${issue.html_url}`,
+              '',
+              '已自动打上 `content-bug` 标签。物理质检 Agent 将核查该章节内容，修正后会自动关闭本 Issue。',
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+      - name: Notify agent autopilot
+        if: ${{ vars.MULTICA_CONTENT_BUG_WEBHOOK_URL != '' }}
+        uses: actions/github-script@v7
+        env:
+          MULTICA_CONTENT_BUG_WEBHOOK_URL: ${{ vars.MULTICA_CONTENT_BUG_WEBHOOK_URL }}
+        with:
+          script: |
+            const chapterId = '${{ steps.extract.outputs.result }}';
+            const url = process.env.MULTICA_CONTENT_BUG_WEBHOOK_URL;
+            if (!url) return;
+
+            await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                event: 'content-bug',
+                issue_number: context.issue.number,
+                chapter_id: chapterId,
+                issue_url: context.payload.issue.html_url,
+              }),
+            });

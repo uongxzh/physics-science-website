@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -100,6 +100,31 @@ const PHYSICS_RULES: PhysicsRule[] = [
     message: "p=ρgh 仅\u9002\u7528\u4e8e\u6db2\u4f53\u538b\u5f3a，\u4e0d\u9002\u7528\u4e8e\u56fa\u4f53",
     check: (content) =>
       /p\s*=\s*ρgh|p=ρgh/.test(content) && content.includes("固体") && content.includes("压强")
+        ? [{ line: undefined }]
+        : [],
+  },
+  {
+    id: "mech-newton-first-condition",
+    category: "mechanics",
+    severity: "warning",
+    type: "concept",
+    message: "牛顿第一定律必须说明成立条件：物体不受力或所受合力为零",
+    check: (content) =>
+      content.includes("牛顿第一定律") &&
+      !content.includes("不受力") &&
+      !content.includes("合力为零") &&
+      !content.includes("合力为 0")
+        ? [{ line: undefined }]
+        : [],
+  },
+  {
+    id: "mech-force-changes-motion",
+    category: "mechanics",
+    severity: "error",
+    type: "concept",
+    message: "力不是维持物体运动的原因，而是改变物体运动状态的原因",
+    check: (content) =>
+      content.includes("力是维持") || /力\s*是\s*使物体运动的原因/.test(content)
         ? [{ line: undefined }]
         : [],
   },
@@ -552,6 +577,6 @@ async function main() {
   console.log(`   Total: ${reports.length} | Passed: ${passedCount} | Failed: ${reports.length - passedCount}`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main();
 }

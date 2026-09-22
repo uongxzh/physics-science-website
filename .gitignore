@@ -44,3 +44,4 @@ dist-ssr
 # Generated reports
 gaps-report.json
 qa-report.json
+quality-history.json

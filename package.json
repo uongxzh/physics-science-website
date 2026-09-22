@@ -16,6 +16,8 @@
     "validate": "node scripts/validate-physics.js",
     "scan-gaps": "npx tsx scripts/scan-gaps.ts",
     "physics-qa": "npx tsx scripts/physics-qa.ts",
+    "quality-dashboard": "npx tsx scripts/generate-quality-dashboard.ts",
+    "evolve": "npm run scan-gaps && npm run generate-content && npm run physics-qa && npm run quality-dashboard",
     "generate-content": "npx tsx scripts/generate-content.ts",
     "test": "vitest run"
   },
