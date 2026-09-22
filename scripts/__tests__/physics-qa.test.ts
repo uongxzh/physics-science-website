@@ -127,7 +127,9 @@ describe("runLLMQA", () => {
   });
 
   it("gracefully handles API errors", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network down")));
     const violations = await runLLMQA("ch-01", "test", "invalid-key-12345");
+    vi.unstubAllGlobals();
     expect(violations.some((v) => v.message.includes("LLM \u8d28\u68c0\u8c03\u7528\u5931\u8d25"))).toBe(
       true
     );
@@ -142,5 +144,113 @@ describe("runFullQA", () => {
     expect(report.passed).toBe(false);
     expect(report.violations.some((v) => v.type === "scope")).toBe(true);
     expect(report.violations.some((v) => v.message.includes("GEMINI_API_KEY"))).toBe(true);
+  });
+});
+
+describe("runStructuredQA - Phase 5 physics rules", () => {
+  it("flags F=ma without acceleration explanation", () => {
+    const violations = runStructuredQA("force-concept", "公式：$F = ma$");
+    expect(
+      violations.some((v) => v.type === "concept" && v.message.includes("F=ma") && v.message.includes("加速度"))
+    ).toBe(true);
+  });
+
+  it("does not flag F=ma when acceleration is explained", () => {
+    const violations = runStructuredQA(
+      "force-concept",
+      "公式：$F = ma$，其中 a 是加速度，力会改变物体的运动状态。"
+    );
+    expect(violations.some((v) => v.message.includes("F=ma"))).toBe(false);
+  });
+
+  it("flags Newton first law without its conditions", () => {
+    const violations = runStructuredQA("newtons-first-law", "牛顿第一定律：物体总会运动。");
+    expect(
+      violations.some((v) => v.message.includes("牛顿第一定律") && v.message.includes("条件"))
+    ).toBe(true);
+  });
+
+  it("flags Newton third law without action-reaction conditions", () => {
+    const violations = runStructuredQA("newtons-first-law", "牛顿第三定律：力总是成对出现。");
+    expect(
+      violations.some((v) => v.message.includes("牛顿第三定律"))
+    ).toBe(true);
+  });
+
+  it("flags p=ρgh applied to solids", () => {
+    const violations = runStructuredQA("pressure", "固体压强公式为 $p = ρgh$。");
+    expect(
+      violations.some((v) => v.message.includes("p=ρgh") && v.message.includes("液体"))
+    ).toBe(true);
+  });
+
+  it("does not flag p=ρgh when liquid scope is stated", () => {
+    const violations = runStructuredQA(
+      "pressure",
+      "液体压强公式 $p = ρgh$ 仅适用于静止液体。"
+    );
+    expect(violations.some((v) => v.message.includes("p=ρgh"))).toBe(false);
+  });
+
+  it("flags refraction angle greater than incidence angle from air to water", () => {
+    const violations = runStructuredQA(
+      "light-refraction",
+      "光从空气斜射入水，折射角大于入射角。"
+    );
+    expect(
+      violations.some((v) => v.type === "concept" && v.message.includes("折射角"))
+    ).toBe(true);
+  });
+
+  it("does not flag correct refraction relation from air to water", () => {
+    const violations = runStructuredQA(
+      "light-refraction",
+      "光从空气斜射入水，折射角小于入射角。"
+    );
+    expect(violations.some((v) => v.message.includes("折射角"))).toBe(false);
+  });
+
+  it("flags lens u>2f described as magnified upright image", () => {
+    const violations = runStructuredQA(
+      "lens",
+      "凸透镜成像：当 u > 2f 时，成放大正立的虚像。"
+    );
+    expect(
+      violations.some((v) => v.type === "concept" && v.message.includes("凸透镜"))
+    ).toBe(true);
+  });
+
+  it("does not flag correct lens u>2f image description", () => {
+    const violations = runStructuredQA(
+      "lens",
+      "凸透镜成像：当 u > 2f 时，成倒立、缩小的实像。"
+    );
+    expect(violations.some((v) => v.message.includes("凸透镜"))).toBe(false);
+  });
+
+  it("flags Q=cmΔt using Kelvin", () => {
+    const violations = runStructuredQA("specific-heat", "吸热公式 $Q = cmΔt$，温差单位用开尔文。");
+    expect(
+      violations.some((v) => v.message.includes("Q=cmΔt") && v.message.includes("摄氏度"))
+    ).toBe(true);
+  });
+
+  it("flags specific heat confused with mass", () => {
+    const violations = runStructuredQA("specific-heat", "比热容与质量有关，质量越大比热容越大。");
+    expect(
+      violations.some((v) => v.message.includes("比热容") && v.message.includes("质量"))
+    ).toBe(true);
+  });
+
+  it("flags sound speed written as a non-340 value without conditions", () => {
+    const violations = runStructuredQA("sound-basics", "空气中的声速约为 1500m/s。");
+    expect(
+      violations.some((v) => v.message.includes("声速") && v.message.includes("340"))
+    ).toBe(true);
+  });
+
+  it("does not flag sound speed when 340m/s is stated", () => {
+    const violations = runStructuredQA("sound-basics", "声音在空气中的传播速度约为 340m/s。");
+    expect(violations.some((v) => v.message.includes("声速"))).toBe(false);
   });
 });

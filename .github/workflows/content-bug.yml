@@ -1,0 +1,70 @@
+name: Content Bug Feedback Loop
+
+on:
+  issues:
+    types: [opened, labeled, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  handle-content-bug:
+    if: contains(github.event.issue.labels.*.name, 'content-bug')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Handle content bug
+        id: handler
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_PROVIDER: gemini
+          LLM_MODEL: gemini-2.0-flash
+        run: npx tsx scripts/handle-content-bug.ts
+
+      - name: Read result action
+        id: result
+        run: |
+          ACTION=$(node -p "require('./content-bug-result.json').action")
+          echo "action=$ACTION" >> "$GITHUB_OUTPUT"
+
+      - name: Post comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          node -e "const r=require('./content-bug-result.json'); require('fs').writeFileSync('comment.md', r.comment)"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body-file comment.md
+
+      - name: Commit auto-fixed chapter
+        if: steps.result.outputs.action == 'close'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/content/chapters/
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(content): auto-fix content bug for ${GITHUB_REF_NAME}"
+            git push
+          fi
+
+      - name: Close issue if fixed
+        if: steps.result.outputs.action == 'close'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: gh issue close "$ISSUE_NUMBER" --repo "$REPO"

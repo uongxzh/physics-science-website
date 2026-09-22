@@ -72,6 +72,11 @@ interface PhysicsRule {
   check: (content: string, lines: string[]) => Array<{ line?: number }>;
 }
 
+function lineFor(lines: string[], regex: RegExp): number | undefined {
+  const idx = lines.findIndex((line) => regex.test(line));
+  return idx >= 0 ? idx + 1 : undefined;
+}
+
 const PHYSICS_RULES: PhysicsRule[] = [
   // ========== 力学 ==========
   {
@@ -79,29 +84,76 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "mechanics",
     severity: "warning",
     type: "concept",
-    message: "F=ma 应配合加速度说明，提醒学生力会改变运动状\u6001",
-    check: (content) =>
-      /F\s*=\s*ma|F=ma/i.test(content) && !content.includes("加速度") ? [{ line: undefined }] : [],
+    message: "F=ma 应配合加速度说明，提醒学生力会改变物体运动状态",
+    check: (content, lines) => {
+      const hasFma = /F\s*=\s*m\s*a|F=ma/i.test(content);
+      if (!hasFma || content.includes("加速度")) return [];
+      return [{ line: lineFor(lines, /F\s*=\s*m\s*a|F=ma/i) }];
+    },
+  },
+  {
+    id: "mech-newton-first-law",
+    category: "mechanics",
+    severity: "warning",
+    type: "concept",
+    message:
+      "牛顿第一定律应说明成立条件：物体不受外力（或所受合力为零）时，保持静止或匀速直线运动状态",
+    check: (content, lines) => {
+      if (!content.includes("牛顿第一定律")) return [];
+      if (/(不受力|合力为零|合力为0|静止|匀速直线运动|惯性)/.test(content)) return [];
+      return [{ line: lineFor(lines, /牛顿第一定律/) }];
+    },
+  },
+  {
+    id: "mech-newton-second-law",
+    category: "mechanics",
+    severity: "warning",
+    type: "concept",
+    message: "牛顿第二定律 F=ma 应说明 F 是物体所受合力，且适用于宏观、低速运动的物体",
+    check: (content, lines) => {
+      if (!content.includes("牛顿第二定律")) return [];
+      if (/(合力|宏观|低速)/.test(content)) return [];
+      return [{ line: lineFor(lines, /牛顿第二定律/) }];
+    },
+  },
+  {
+    id: "mech-newton-third-law",
+    category: "mechanics",
+    severity: "warning",
+    type: "concept",
+    message:
+      "牛顿第三定律应说明作用力与反作用力大小相等、方向相反、作用在同一直线上，且分别作用在不同物体上",
+    check: (content, lines) => {
+      if (!content.includes("牛顿第三定律")) return [];
+      if (/(大小相等|方向相反|同一直线|相互作用力|不同物体)/.test(content)) return [];
+      return [{ line: lineFor(lines, /牛顿第三定律/) }];
+    },
   },
   {
     id: "mech-buoyancy-direction",
     category: "mechanics",
     severity: "error",
     type: "concept",
-    message: "浮力方向必\u987b竖\u76f4\u5411\u4e0a，不\u80fd\u8bf4\u6210\u5176\u4ed6\u65b9\u5411",
-    check: (content) =>
-      content.includes("浮力") && /浮力.*(水平|向下|斜向)/.test(content) ? [{ line: undefined }] : [],
+    message: "浮力方向必须竖直向上，不能说成其他方向",
+    check: (content, lines) => {
+      if (!content.includes("浮力")) return [];
+      const wrong = /浮力.{0,10}(水平|向下|斜向|向左|向右)/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /浮力.{0,10}(水平|向下|斜向|向左|向右)/) }];
+    },
   },
   {
     id: "mech-pressure-liquid",
     category: "mechanics",
     severity: "warning",
     type: "concept",
-    message: "p=ρgh 仅\u9002\u7528\u4e8e\u6db2\u4f53\u538b\u5f3a，\u4e0d\u9002\u7528\u4e8e\u56fa\u4f53",
-    check: (content) =>
-      /p\s*=\s*ρgh|p=ρgh/.test(content) && content.includes("固体") && content.includes("压强")
-        ? [{ line: undefined }]
-        : [],
+    message: "p=ρgh 仅适用于液体压强（且液体静止），不适用于固体压强",
+    check: (content, lines) => {
+      const hasFormula = /p\s*=\s*ρ\s*g\s*h|p\s*=\s*ρgh|p=ρgh/i.test(content);
+      if (!hasFormula) return [];
+      if (/(液体|适用范围|只适用|仅适用)/.test(content)) return [];
+      return [{ line: lineFor(lines, /p\s*=\s*ρ\s*g\s*h|p\s*=\s*ρgh|p=ρgh/i) }];
+    },
   },
 
   // ========== 光学 ==========
@@ -110,39 +162,46 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "optics",
     severity: "error",
     type: "concept",
-    message: "反\u5c04\u89d2\u5fc5\u987b\u7b49\u4e8e\u5165\u5c04\u89d2，不\u80fd\u5199\u6210\u53cd\u5c04\u89d2\u5927\u4e8e\u6216\u5c0f\u4e8e\u5165\u5c04\u89d2",
-    check: (content) =>
-      content.includes("反射角") &&
-      /反射角\s*[<>＜＞]\s*入射角/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "反射角必须等于入射角，不能写成反射角大于或小于入射角",
+    check: (content, lines) => {
+      if (!content.includes("反射角")) return [];
+      const wrong =
+        /反射角\s*(?:不等于|≠|[<>＜＞])\s*入射角/.test(content) ||
+        /反射角\s*(?:大于|小于)\s*入射角/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /反射角/) }];
+    },
   },
   {
     id: "optics-refraction-air-water",
     category: "optics",
     severity: "error",
     type: "concept",
-    message: "光\u4ece\u7a7a\u6c14\u659c\u5c04\u5165\u6c34，\u6298\u5c04\u89d2\u5fc5\u987b\u5c0f\u4e8e\u5165\u5c04\u89d2",
-    check: (content) =>
-      content.includes("空气") &&
-      content.includes("水") &&
-      content.includes("折射") &&
-      /折射角\s*[>＞]\s*入射角/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "光从空气斜射入水，折射角必须小于入射角",
+    check: (content, lines) => {
+      const context = content.includes("空气") && content.includes("水") && content.includes("折射");
+      if (!context) return [];
+      const wrong = /折射角\s*(?:大于|[>＞])\s*入射角/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /折射角/) }];
+    },
   },
   {
     id: "optics-lens-u-gt-2f",
     category: "optics",
     severity: "error",
     type: "concept",
-    message: "凸\u900f\u955c u>2f 时\u5e94\u6210\u5012\u7acb\u7f29\u5c0f\u7684\u5b9e\u50cf，不\u80fd\u5199\u6210\u653e\u5927\u6216\u6b63\u7acb",
-    check: (content) =>
-      content.includes("凸透镜") &&
-      /u\s*>\s*2f/.test(content) &&
-      /(正立|放大|虚像)/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "凸透镜 u>2f 时应成倒立缩小的实像，不能写成放大或正立",
+    check: (content, lines) => {
+      const hasUgt2f = /u\s*>\s*2f/.test(content);
+      if (!content.includes("凸透镜") || !hasUgt2f) return [];
+      const hasCorrect = /倒立[\s\S]{0,12}缩小[\s\S]{0,12}实像/.test(content);
+      if (hasCorrect) return [];
+      if (/(正立|放大|虚像)/.test(content)) {
+        return [{ line: lineFor(lines, /u\s*>\s*2f/) }];
+      }
+      return [];
+    },
   },
 
   // ========== 电学 ==========
@@ -151,44 +210,55 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "electricity",
     severity: "error",
     type: "safety",
-    message: "严\u7981\u6b63\u9762\u63cf\u8ff0\u7535\u6e90\u77ed\u8def\u4f5c\u4e3a\u53ef\u884c\u65b9\u6cd5",
-    check: (content) =>
-      /(?<!防止|避免|不能|禁止).*电源短路|短路.*可行|可以.*短路/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "严禁正面描述电源短路作为可行方法",
+    check: (content, lines) => {
+      if (!content.includes("短路")) return [];
+      const dangerous =
+        /(?:可以|应该|需要|建议|通过|用).{0,8}(?:电源)?短路/.test(content) ||
+        /短路.{0,8}(?:可行|增大|提高|正确|安全)/.test(content);
+      const safe = /(?:防止|避免|严禁|禁止|不能|不可|不要).{0,4}(?:电源)?短路/.test(content);
+      if (dangerous && !safe) return [{ line: lineFor(lines, /短路/) }];
+      return [];
+    },
   },
   {
     id: "elec-ammeter-series",
     category: "electricity",
     severity: "error",
     type: "concept",
-    message: "电\u6d41\u8868\u5fc5\u987b\u4e0e\u7528\u7535\u5668\u4e32\u8054，不\u80fd\u5e76\u8054",
-    check: (content) =>
-      content.includes("电流表") &&
-      /电流表.*并联|并联.*电流表/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "电流表必须与用电器串联，不能并联",
+    check: (content, lines) => {
+      if (!content.includes("电流表")) return [];
+      const wrong = /电流表.{0,8}并联|并联.{0,8}电流表/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /电流表/) }];
+    },
   },
   {
     id: "elec-voltmeter-parallel",
     category: "electricity",
     severity: "error",
     type: "concept",
-    message: "电\u538b\u8868\u5fc5\u987b\u4e0e\u7528\u7535\u5668\u5e76\u8054，不\u80fd\u4e32\u8054",
-    check: (content) =>
-      content.includes("电压表") &&
-      /电压表.*串联|串联.*电压表/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "电压表必须与用电器并联，不能串联",
+    check: (content, lines) => {
+      if (!content.includes("电压表")) return [];
+      const wrong = /电压表.{0,8}串联|串联.{0,8}电压表/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /电压表/) }];
+    },
   },
   {
     id: "elec-ohms-law-units",
     category: "electricity",
     severity: "warning",
     type: "formula",
-    message: "I=U/R 使\u7528\u65f6\u5e94\u6ce8\u610f\u5355\u4f4d\u7edf\u4e00（A、V、Ω）",
-    check: (content) =>
-      /I\s*=\s*U\/R|I=U\/R/.test(content) && !content.includes("单位") ? [{ line: undefined }] : [],
+    message: "I=U/R 使用时应注意单位统一（I 用安培 A，U 用伏特 V，R 用欧姆 Ω）",
+    check: (content, lines) => {
+      const hasFormula = /I\s*=\s*U\s*\/\s*R|I=U\/R/i.test(content);
+      if (!hasFormula) return [];
+      if (/(单位|安培|伏特|欧姆|\bA\b|\bV\b|Ω)/.test(content)) return [];
+      return [{ line: lineFor(lines, /I\s*=\s*U\s*\/\s*R|I=U\/R/i) }];
+    },
   },
 
   // ========== 热学 ==========
@@ -197,23 +267,28 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "thermal",
     severity: "warning",
     type: "formula",
-    message: "Q=cmΔt 中\u7684温\u5dee应\u4f7f\u7528\u6444\u6c0f\u5ea6（°C），不\u662f\u5f00\u5c14\u6587",
-    check: (content) =>
-      /Q\s*=\s*cmΔt|Q=cmΔt/.test(content) && /开尔文|K/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "Q=cmΔt 中的温差应使用摄氏度（°C），不是开尔文",
+    check: (content, lines) => {
+      const hasFormula = /Q\s*=\s*c\s*m\s*Δ\s*t|Q=cmΔt/i.test(content);
+      if (!hasFormula) return [];
+      if (/(开尔文|\bK\b)/.test(content)) {
+        return [{ line: lineFor(lines, /Q\s*=\s*c\s*m\s*Δ\s*t|Q=cmΔt/i) }];
+      }
+      return [];
+    },
   },
   {
     id: "thermal-specific-heat-definition",
     category: "thermal",
     severity: "warning",
     type: "concept",
-    message: "比\u70ed\u5bb9\u662f\u7269\u8d28\u7684\u4e00\u79cd\u7279\u6027，与\u8d28\u91cf\u65e0\u5173",
-    check: (content) =>
-      content.includes("比热容") &&
-      /比热容.*(质量|多少|增大.*质量)/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "比热容是物质的一种特性，与质量、体积无关；吸放热多少才与质量有关",
+    check: (content, lines) => {
+      if (!content.includes("比热容")) return [];
+      const wrong = /(?:比热容|比热).{0,12}(?:与|随|取决于).{0,10}(?:质量|体积|多少)/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /比热容/) }];
+    },
   },
 
   // ========== 声学 ==========
@@ -222,32 +297,37 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "acoustics",
     severity: "error",
     type: "concept",
-    message: "音\u8c03\u4e0e\u9891\u7387\u6210\u6b63\u6bd4，不\u80fd\u5199\u6210\u53cd\u6bd4",
-    check: (content) =>
-      content.includes("音调") &&
-      content.includes("频率") &&
-      /音调.*频率.*反比|频率.*音调.*反比/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "音调与频率成正比，不能写成反比",
+    check: (content, lines) => {
+      if (!content.includes("音调") || !content.includes("频率")) return [];
+      const wrong =
+        /音调.{0,10}频率.{0,10}反比/.test(content) ||
+        /频率.{0,10}音调.{0,10}反比/.test(content);
+      if (!wrong) return [];
+      return [{ line: lineFor(lines, /音调|频率/) }];
+    },
   },
   {
     id: "acoustics-speed-of-sound",
     category: "acoustics",
     severity: "warning",
     type: "concept",
-    message: "声\u901f\u5728\u7a7a\u6c14\u4e2d\u7ea6 340m/s，若\u5199\u6210\u5176\u4ed6\u6570\u503c\u9700\u8bf4\u660e\u6761\u4ef6",
-    check: (content) =>
-      content.includes("声速") &&
-      /声速.*\d{3,}/.test(content) &&
-      !/340|15°C|15℃/.test(content)
-        ? [{ line: undefined }]
-        : [],
+    message: "声速在空气中约 340m/s，若写成其他数值需说明条件",
+    check: (content, lines) => {
+      if (!content.includes("声速")) return [];
+      const hasNumber = /声速.{0,12}\d{3,}/.test(content);
+      if (!hasNumber) return [];
+      if (/340|15\s*°?C|15\s*℃/.test(content)) return [];
+      return [{ line: lineFor(lines, /声速/) }];
+    },
   },
 ];
 
 function inferCategory(chapterId: string, content: string): string {
   const idToCategory: Record<string, string> = {
     sound: "acoustics",
+    noise: "acoustics",
+    ultrasound: "acoustics",
     light: "optics",
     lens: "optics",
     mirror: "optics",
@@ -256,20 +336,26 @@ function inferCategory(chapterId: string, content: string): string {
     reflection: "optics",
     temperature: "thermal",
     melting: "thermal",
+    freezing: "thermal",
     vaporization: "thermal",
+    liquefaction: "thermal",
     sublimation: "thermal",
+    deposition: "thermal",
     heat: "thermal",
     specific: "thermal",
     motion: "mechanics",
     velocity: "mechanics",
     force: "mechanics",
     gravity: "mechanics",
+    elastic: "mechanics",
     friction: "mechanics",
     newton: "mechanics",
     pressure: "mechanics",
     buoyancy: "mechanics",
     machine: "mechanics",
+    efficiency: "mechanics",
     work: "mechanics",
+    power: "mechanics",
     mechanical: "mechanics",
     electric: "electricity",
     circuit: "electricity",
@@ -277,7 +363,6 @@ function inferCategory(chapterId: string, content: string): string {
     voltage: "electricity",
     resistance: "electricity",
     ohm: "electricity",
-    power: "electricity",
     magnetism: "electricity",
   };
 
@@ -285,7 +370,7 @@ function inferCategory(chapterId: string, content: string): string {
     if (chapterId.toLowerCase().includes(key)) return cat;
   }
 
-  // Fallback: scan first heading or YAML frontmatter
+  // Fallback: read YAML frontmatter category
   const categoryMatch = content.match(/category:\s*(\w+)/);
   if (categoryMatch) return categoryMatch[1];
 
@@ -297,14 +382,20 @@ export function runStructuredQA(chapterId: string, content: string): QAViolation
   const lines = content.split("\n");
   const category = inferCategory(chapterId, content);
 
-  // 1. 公式书写检查：$ 符号是\u5426成对
+  // 1. 公式书写检查：$ 符号是否成对（跳过 YAML frontmatter）
+  let inFrontmatter = false;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    // Skip YAML frontmatter
-    if (i === 0 && line.trim() === "---") continue;
-    if (line.trim().startsWith("---")) continue;
+    const trimmed = lines[i].trim();
+    if (i === 0 && trimmed === "---") {
+      inFrontmatter = true;
+      continue;
+    }
+    if (inFrontmatter) {
+      if (trimmed === "---") inFrontmatter = false;
+      continue;
+    }
 
-    const dollarCount = (line.match(/\$/g) || []).length;
+    const dollarCount = (lines[i].match(/\$/g) || []).length;
     if (dollarCount % 2 !== 0) {
       violations.push({
         severity: "error",
@@ -503,24 +594,27 @@ export async function runFullQA(
 }
 
 async function main() {
-  const chaptersDir =
+  const inputPath =
     process.argv[2] || path.join(__dirname, "..", "public", "content", "chapters");
   const outputPath =
     process.argv[3] || path.join(__dirname, "..", "qa-report.json");
   const apiKey = process.env.GEMINI_API_KEY;
 
-  if (!fs.existsSync(chaptersDir)) {
-    console.error(`❌ Chapters directory not found: ${chaptersDir}`);
+  if (!fs.existsSync(inputPath)) {
+    console.error(`❌ Chapters directory or markdown file not found: ${inputPath}`);
     process.exit(1);
   }
 
-  const files = fs
-    .readdirSync(chaptersDir)
-    .filter((f) => f.endsWith(".md"))
-    .sort();
+  const isSingleFile = fs.statSync(inputPath).isFile();
+  const files = isSingleFile
+    ? [inputPath]
+    : fs
+        .readdirSync(inputPath)
+        .filter((f) => f.endsWith(".md"))
+        .sort();
 
   if (files.length === 0) {
-    console.error(`⚠️ No markdown chapters found in ${chaptersDir}`);
+    console.error(`⚠️ No markdown chapters found in ${inputPath}`);
     process.exit(0);
   }
 
@@ -529,8 +623,9 @@ async function main() {
   const reports: QAReport[] = [];
 
   for (const file of files) {
+    const filePath = isSingleFile ? file : path.join(inputPath, file);
     const chapterId = path.basename(file, ".md");
-    const content = fs.readFileSync(path.join(chaptersDir, file), "utf-8");
+    const content = fs.readFileSync(filePath, "utf-8");
 
     const report = await runFullQA(chapterId, content, apiKey);
     reports.push(report);
@@ -553,5 +648,8 @@ async function main() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
+  main().catch((err) => {
+    console.error("\n❌ QA pipeline failed:", err.message);
+    process.exit(1);
+  });
 }

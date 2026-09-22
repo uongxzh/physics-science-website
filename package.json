@@ -17,6 +17,9 @@
     "scan-gaps": "npx tsx scripts/scan-gaps.ts",
     "physics-qa": "npx tsx scripts/physics-qa.ts",
     "generate-content": "npx tsx scripts/generate-content.ts",
+    "quality-dashboard": "npx tsx scripts/quality-dashboard.ts",
+    "handle-content-bug": "npx tsx scripts/handle-content-bug.ts",
+    "qa": "npm run scan-gaps && npm run physics-qa && npm run quality-dashboard",
     "test": "vitest run"
   },
   "dependencies": {

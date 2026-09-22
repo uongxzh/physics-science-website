@@ -215,7 +215,7 @@ function updateFrontmatter(md: string, updates: Record<string, unknown>): string
   return md.replace(/^---\n[\s\S]*?\n---/, `---\n${yaml}\n---`);
 }
 
-async function generateChapter(
+export async function generateChapter(
   chapter: CurriculumChapter,
   chaptersDir: string
 ): Promise<GenerateResult> {
@@ -332,10 +332,14 @@ async function main() {
 
   const curriculum: CurriculumData = JSON.parse(fs.readFileSync(curriculumPath, "utf-8"));
 
-  const candidates = curriculum.chapters.filter(
-    (ch) => ch.status === "empty" || ch.word_count < 500
-  );
-  const maxToGenerate = Number(process.env.MAX_GENERATE || candidates.length);
+  const targetChapterId = process.env.CHAPTER_ID?.trim();
+  const candidates = curriculum.chapters.filter((ch) => {
+    if (targetChapterId) return ch.id === targetChapterId;
+    return ch.status === "empty" || ch.word_count < 500;
+  });
+  const maxToGenerate = targetChapterId
+    ? 1
+    : Number(process.env.MAX_GENERATE || candidates.length);
   const toGenerate = candidates.slice(0, maxToGenerate);
 
   console.log(`\n🔧 Provider: ${LLM_PROVIDER}`);
@@ -391,7 +395,9 @@ async function main() {
   if (failed > 0) process.exit(1);
 }
 
-main().catch((err) => {
-  console.error("\n❌ Generation pipeline failed:", err.message);
-  process.exit(1);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error("\n❌ Generation pipeline failed:", err.message);
+    process.exit(1);
+  });
+}

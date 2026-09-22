@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { LearningMarkdown } from './LearningMarkdown'
+import { ReportErrorButton } from './ReportErrorButton'
 
 interface Chapter {
   id: string
@@ -180,118 +181,7 @@ export function ChapterDetail({ chapter, category, experiments, onBack }: Chapte
         </section>
       )}
 
-      <FeedbackButton chapterId={chapter.id} chapterTitle={chapter.title} />
-    </div>
-  )
-}
-
-function FeedbackButton({ chapterId, chapterTitle }: { chapterId: string; chapterTitle: string }) {
-  const [showForm, setShowForm] = useState(false)
-  const [feedback, setFeedback] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  if (submitted) {
-    return (
-      <div
-        style={{
-          padding: 16,
-          background: '#f0fdf4',
-          color: '#15803d',
-          borderRadius: 8,
-          textAlign: 'center',
-        }}
-      >
-        {'\u2705'} 反馈已记录，\u611f\u8c22\u60a8\u7684\u5efa\u8bae\uff01
-      </div>
-    )
-  }
-
-  return (
-    <div style={{ marginTop: 24 }}>
-      {!showForm ? (
-        <button
-          onClick={() => setShowForm(true)}
-          style={{
-            color: '#64748b',
-            background: 'transparent',
-            border: '1px dashed #cbd5e1',
-            padding: '8px 16px',
-            borderRadius: 8,
-            fontSize: '0.875rem',
-            cursor: 'pointer',
-          }}
-        >
-          {'\ud83d\udccb'} 发\u73b0\u9519\u8bef\uff1f\u70b9\u6b64\u53cd\u9988
-        </button>
-      ) : (
-        <div
-          style={{
-            background: '#f8fafc',
-            border: '1px solid #e2e8f0',
-            borderRadius: 12,
-            padding: 20,
-          }}
-        >
-          <h4 style={{ marginBottom: 12, color: '#0f172a' }}>
-            \u53cd\u9988：{chapterTitle}
-          </h4>
-          <textarea
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            placeholder="\u8bf7\u63cf\u8ff0\u60a8\u53d1\u73b0\u7684\u95ee\u9898..."
-            style={{
-              width: '100%',
-              minHeight: 100,
-              padding: 12,
-              border: '1px solid #cbd5e1',
-              borderRadius: 8,
-              fontSize: '0.875rem',
-              fontFamily: 'inherit',
-              resize: 'vertical',
-              marginBottom: 12,
-            }}
-          />
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-            <button
-              onClick={() => setShowForm(false)}
-              style={{
-                padding: '8px 16px',
-                borderRadius: 8,
-                border: '1px solid #e2e8f0',
-                background: '#ffffff',
-                color: '#64748b',
-                cursor: 'pointer',
-              }}
-            >
-              \u53d6\u6d88
-            </button>
-            <button
-              onClick={() => {
-                if (!feedback.trim()) return
-                const title = encodeURIComponent(`[content-bug] ${chapterTitle} (${chapterId})`)
-                const body = encodeURIComponent(
-                  `## \u7ae0\u8282\n- ID: ${chapterId}\n- \u6807\u9898: ${chapterTitle}\n\n## \u95ee\u9898\u63cf\u8ff0\n${feedback}\n\n## \u6765\u6e90\n\u7f51\u9875\u53cd\u9988\u6309\u94ae`
-                )
-                window.open(
-                  `https://github.com/uongxzh/physics-science-website/issues/new?labels=content-bug&title=${title}&body=${body}`,
-                  '_blank'
-                )
-                setSubmitted(true)
-              }}
-              style={{
-                padding: '8px 16px',
-                borderRadius: 8,
-                border: 'none',
-                background: '#3b82f6',
-                color: '#ffffff',
-                cursor: 'pointer',
-              }}
-            >
-              \u63d0\u4ea4\u53cd\u9988
-            </button>
-          </div>
-        </div>
-      )}
+      <ReportErrorButton chapterId={chapter.id} chapterTitle={chapter.title} />
     </div>
   )
 }
