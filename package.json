@@ -20,6 +20,7 @@
     "quality-dashboard": "npx tsx scripts/quality-dashboard.ts",
     "handle-content-bug": "npx tsx scripts/handle-content-bug.ts",
     "qa": "npm run scan-gaps && npm run physics-qa && npm run quality-dashboard",
+    "evolve": "npm run scan-gaps && npm run generate-content && npm run physics-qa && npm run quality-dashboard",
     "test": "vitest run"
   },
   "dependencies": {
