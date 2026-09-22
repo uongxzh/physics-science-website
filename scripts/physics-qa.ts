@@ -267,14 +267,12 @@ const PHYSICS_RULES: PhysicsRule[] = [
     category: "thermal",
     severity: "warning",
     type: "formula",
-    message: "Q=cmΔt 中的温差应使用摄氏度（°C），不是开尔文",
+    message: "Q=cmΔt 应说明 Δt 的温度单位；温差用 °C 或 K 表示均可（数值等价），需与比热容 c 的单位配套",
     check: (content, lines) => {
       const hasFormula = /Q\s*=\s*c\s*m\s*Δ\s*t|Q=cmΔt/i.test(content);
       if (!hasFormula) return [];
-      if (/(开尔文|\bK\b)/.test(content)) {
-        return [{ line: lineFor(lines, /Q\s*=\s*c\s*m\s*Δ\s*t|Q=cmΔt/i) }];
-      }
-      return [];
+      if (/(℃|°C|摄氏|开尔文|\bK\b|温度|单位)/.test(content)) return [];
+      return [{ line: lineFor(lines, /Q\s*=\s*c\s*m\s*Δ\s*t|Q=cmΔt/i) }];
     },
   },
   {

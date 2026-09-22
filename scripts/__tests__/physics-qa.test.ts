@@ -228,10 +228,15 @@ describe("runStructuredQA - Phase 5 physics rules", () => {
     expect(violations.some((v) => v.message.includes("凸透镜"))).toBe(false);
   });
 
-  it("flags Q=cmΔt using Kelvin", () => {
+  it("does not flag Q=cmΔt when Kelvin is used for Δt", () => {
     const violations = runStructuredQA("specific-heat", "吸热公式 $Q = cmΔt$，温差单位用开尔文。");
+    expect(violations.some((v) => v.message.includes("Q=cmΔt"))).toBe(false);
+  });
+
+  it("flags Q=cmΔt without specifying any temperature unit", () => {
+    const violations = runStructuredQA("specific-heat", "吸热公式 $Q = cmΔt$。");
     expect(
-      violations.some((v) => v.message.includes("Q=cmΔt") && v.message.includes("摄氏度"))
+      violations.some((v) => v.message.includes("Q=cmΔt") && v.message.includes("单位"))
     ).toBe(true);
   });
 
